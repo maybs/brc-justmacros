@@ -1,0 +1,16 @@
+-- $$USES "BRC_TOOLS"
+CLS();
+
+if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
+  ATEMMixerMECut( 1, 1 );
+  Sleep(60);
+end;
+
+XKeysSetButtonBlueLEDState( 1, 16, "false" );
+XKeysSetButtonBlueLEDState( 1, 15, "false" );
+XKeysSetButtonBlueLEDState( 1, 14, "false" );
+XKeysSetButtonBlueLEDState( 1, 13, "false" );
+
+if (not ATEMMixerMEGetFadedToBlack( 1, 1 )) then
+    ATEMMixerMEFadeToBlack( 1, 1 );       
+end;           
