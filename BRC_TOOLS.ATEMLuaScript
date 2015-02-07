@@ -8,7 +8,7 @@
 -- 6 = in 5
 -- 7 = in 6
 -- 8 = in 7
--- 9 = in 8
+-- 9 = in 8            
 -- 10 = color bars
 -- 11 = color 1
 -- 12 = color 2
@@ -26,9 +26,81 @@
 -- 23 = preview
 -- -----------------------------------------------------------------------------------------------------------------------
 BRC_INPUT_CAMERA_CENTER = 3;
+BRC_INPUT_CAMERA_FLOOR = 2;
 BRC_INPUT_CAMERA_WIDE = 6;
 BRC_INPUT_COMPUTER_MASTER = 4;
 BRC_INPUT_COMPUTER_SLAVE = 5;
 BRC_INPUT_PROGRAM = 23;
 
+function BRCProjectCameraFloor ()
+    XKeysSetButtonBlueLEDState( 1, 12, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 11, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 10, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 9, 'true' );
 
+    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_CAMERA_FLOOR );
+end;
+
+function BRCProjectCameraWide ()
+    XKeysSetButtonBlueLEDState( 1, 12, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 11, 'true' );
+    XKeysSetButtonBlueLEDState( 1, 10, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 9, 'false' );
+
+    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_CAMERA_WIDE );
+end;
+
+function BRCProjectCameraZoom ()
+    XKeysSetButtonBlueLEDState( 1, 12, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 11, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 10, 'true' );
+    XKeysSetButtonBlueLEDState( 1, 9, 'false' );
+
+    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_CAMERA_CENTER );
+end;
+
+function BRCProjectComputer ()
+    XKeysSetButtonBlueLEDState( 1, 12, 'true' );
+    XKeysSetButtonBlueLEDState( 1, 11, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 10, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 9, 'false' );
+
+    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );
+end;
+
+function BRCPreviewCameraFloor ()
+    XKeysSetButtonBlueLEDState( 1, 8, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 7, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 6, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 5, 'true' );
+    
+    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_FLOOR );
+end;
+
+
+function BRCPreviewCameraWide ()
+    XKeysSetButtonBlueLEDState( 1, 8, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 7, 'true' );
+    XKeysSetButtonBlueLEDState( 1, 6, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 5, 'false' );
+
+    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_WIDE );
+end;
+
+function BRCPreviewCameraZoom ()
+    XKeysSetButtonBlueLEDState( 1, 8, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 7, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 6, 'true' );
+    XKeysSetButtonBlueLEDState( 1, 5, 'false' );
+
+    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_CENTER );
+end;
+
+function BRCPreviewComputer ()
+    XKeysSetButtonBlueLEDState( 1, 8, 'true' );
+    XKeysSetButtonBlueLEDState( 1, 7, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 6, 'false' );
+    XKeysSetButtonBlueLEDState( 1, 5, 'false' );
+    
+    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );
+end;

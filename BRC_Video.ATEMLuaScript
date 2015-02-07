@@ -9,11 +9,10 @@ end;
 XKeysSetButtonBlueLEDState( 1, 16, 'true' );
 XKeysSetButtonBlueLEDState( 1, 15, 'false' );
 XKeysSetButtonBlueLEDState( 1, 14, 'false' );
-XKeysSetButtonBlueLEDState( 1, 13, 'false' );
 
-ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );
-ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );      
-
+BRCProjectComputer();
+BRCPreviewComputer();
+                        
 if ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
    ATEMMixerMESetNextTransitionLayers( 1, 1, 'BACKGROUND, KEY1' );
 else

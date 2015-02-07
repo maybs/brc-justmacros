@@ -9,8 +9,26 @@ end;
 XKeysSetButtonBlueLEDState( 1, 16, "false" );
 XKeysSetButtonBlueLEDState( 1, 15, "false" );
 XKeysSetButtonBlueLEDState( 1, 14, "false" );
-XKeysSetButtonBlueLEDState( 1, 13, "false" );
 
 if (not ATEMMixerMEGetFadedToBlack( 1, 1 )) then
-    ATEMMixerMEFadeToBlack( 1, 1 );       
-end;           
+    ATEMMixerMEFadeToBlack( 1, 1 );
+end;
+
+ATEMMixerAUXSetInput( 1, 1, 1 );
+
+XKeysSetButtonBlueLEDState( 1, 16, 'true' );
+XKeysSetButtonBlueLEDState( 1, 15, 'true' );
+XKeysSetButtonBlueLEDState( 1, 14, 'true' );
+XKeysSetButtonBlueLEDState( 1, 13, 'false' );
+XKeysSetButtonBlueLEDState( 1, 12, 'false' );
+XKeysSetButtonBlueLEDState( 1, 11, 'false' );
+XKeysSetButtonBlueLEDState( 1, 10, 'false' );
+XKeysSetButtonBlueLEDState( 1, 9, 'false' );
+XKeysSetButtonBlueLEDState( 1, 8, 'false' );
+XKeysSetButtonBlueLEDState( 1, 7, 'false' );
+XKeysSetButtonBlueLEDState( 1, 6, 'false' );
+XKeysSetButtonBlueLEDState( 1, 5, 'false' );
+XKeysSetButtonBlueLEDState( 1, 4, 'false' );
+XKeysSetButtonBlueLEDState( 1, 3, 'false' );
+XKeysSetButtonBlueLEDState( 1, 2, 'false' );
+XKeysSetButtonBlueLEDState( 1, 1, 'false' );

@@ -1,0 +1,7 @@
+if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
+  ATEMMixerMECut( 1, 1 );
+  Sleep(60);
+end;
+
+ATEMMixerMESetNextTransitionLayers( 1, 1, 'BACKGROUND' );
+ATEMMixerMEAutoTransition( 1, 1 );

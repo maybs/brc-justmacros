@@ -1,0 +1,3 @@
+-- $$USES "BRC_TOOLS"
+
+BRCProjectComputer();

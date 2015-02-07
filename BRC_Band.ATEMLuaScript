@@ -5,14 +5,13 @@ if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
   ATEMMixerMECut( 1, 1 );
   Sleep(60);
 end;
-     
+
 XKeysSetButtonBlueLEDState( 1, 16, 'false' );
 XKeysSetButtonBlueLEDState( 1, 15, 'true' );
 XKeysSetButtonBlueLEDState( 1, 14, 'false' );
-XKeysSetButtonBlueLEDState( 1, 13, 'false' );
 
-ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );
-ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_WIDE );
+BRCProjectComputer();
+BRCPreviewCameraWide();
 
 if ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
    ATEMMixerMESetNextTransitionLayers( 1, 1, 'BACKGROUND' );
