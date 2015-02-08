@@ -1,6 +1,8 @@
 -- $$USES "BRC_TOOLS"
 CLS();
 
+ATEMMixerAudioSetInputGain( 1, BRC_AUDIO_RCA, 4 );
+
 if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
   ATEMMixerMECut( 1, 1 );
   Sleep(60);

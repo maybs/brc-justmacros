@@ -31,6 +31,7 @@ BRC_INPUT_CAMERA_WIDE = 6;
 BRC_INPUT_COMPUTER_MASTER = 4;
 BRC_INPUT_COMPUTER_SLAVE = 5;
 BRC_INPUT_PROGRAM = 23;
+BRC_AUDIO_RCA = 9;
 
 function BRCProjectCameraFloor ()
     XKeysSetButtonBlueLEDState( 1, 12, 'false' );
