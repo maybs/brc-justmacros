@@ -1,13 +1,14 @@
-current macro config expects the ATEM connections to be:
-HDMI in 1 = [unused]
-HDMI in 2 = rear camcorder (zoomed in)
-HDMI in 3 = master ProPresenter computer
-HDMI in 4 = slave ProPresenter computer
-SDI in 5 = front camera (wide view)
+Current macro config expects the ATEM connections to be:
+HDMI in 1 = FLOOR (camera manually operated from the floor)
+HDMI in 2 = ZOOM (rear camcorder)
+HDMI in 3 = iMAC (master ProPresenter computer)
+HDMI in 4 = Key (slave ProPresenter computer)
+SDI in 5 = WIDE (front camera)
+SDI in 8 = SSD recorder out
+RCA audio in = mixer board
 SDI Aux 1 = projectors
-
 HDMI Program Output = HDMI splitter to TVs
-SDI Program Output = SSD recorder
+SDI Program Output = SSD recorder in
 
 'radio group' indicates that only one of the buttons in that group may be active at a time.  The active button will be illuminated.
 
@@ -18,31 +19,26 @@ SDI Program Output = SSD recorder
 16. VIDEO (radio group 1)
 	program = master ProPresenter
 	aux1 = master ProPresenter
+        RCA volume = 0
 15. BAND (radio group 1)
-	program = camera (WIDE CENTER), USK slave ProPresenter
+	program = camera (WIDE), USK slave ProPresenter
 	aux1 = master ProPresenter
+        RCA volume = -8
 14. TALK (radio group 1)
 	program = camera (WIDE CENTER), USK slave ProPresenter
 	aux1 = master ProPresenter
-13. IMAG (radio group 1)
-	program = camera (ZOOM CENTER), USK slave ProPresenter
-	aux1 = program
-12. BLACK
+        RCA volume = +4
+13. BLACK
 	fade to black
-
---- unused
-11.
-10.
-9.
-
---- camera control
-8. SELECT
-7. WIDE (radio group 3)
-6. ZOOM (radio group 3)
-5.
-4. LEFT (radio group 4)
-3. CENTER (radio group 4)
-2. RIGHT (radio group 4)
-1. MOVE
-
-- SELECT and MOVE are used to move a camera between WIDE and ZOOM without switching to the camera (e.g. to get into position prior to switching).  Press SELECT, then one of WIDE/ZOOM, then one of LEFT/CENTER/RIGHT, then MOVE.
+12. iMAC to projectors (radio group 2)
+11. WIDE to projectors (radio group 2)
+10. ZOOM to projectors (radio group 2)
+ 9. FLOOR to projectors (radio group 2)
+ 8. iMAC preview (radio group 3)
+ 7. WIDE preview (radio group 3)
+ 6. ZOOM preview (radio group 3)
+ 5. FLOOR preview (radio group 3)
+ 4. auto transition
+ 3. cut transition
+ 2. enable USK for text overlay
+ 1. [unused]
