@@ -1,3 +1,5 @@
+-- $$USES "BRC_TOOLS"
+
 local brcAutoOn;
 if EnviroRead("BRC_AUTO_ON") == "TRUE" then
     brcAutoOn = "FALSE";

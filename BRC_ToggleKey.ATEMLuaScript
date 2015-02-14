@@ -1,3 +1,5 @@
+-- $$USES "BRC_TOOLS"
+
 local brcKeyOn;
 if EnviroRead("BRC_KEY_ON") == "TRUE" then
     brcKeyOn = "FALSE";
