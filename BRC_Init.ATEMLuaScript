@@ -1,17 +1,6 @@
--- $$USES "BRC_TOOLS"
-CLS();
+EnviroWrite("BRC_AUTO_ON", "TRUE");
+EnviroWrite("BRC_KEY_ON", "FALSE");
 
-if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
-  ATEMMixerMECut( 1, 1 );
-  Sleep(60);
-end;
-
-if (not ATEMMixerMEGetFadedToBlack( 1, 1 )) then
-    ATEMMixerMEFadeToBlack( 1, 1 );
-end;
-
-ATEMMixerAUXSetInput( 1, 1, 1 );
-                                        
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'true' );

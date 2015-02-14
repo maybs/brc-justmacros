@@ -1,0 +1,16 @@
+local brcKeyOn;
+if EnviroRead("BRC_KEY_ON") == "TRUE" then
+    brcKeyOn = "FALSE";
+    if ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
+       ATEMMixerMESetNextTransitionLayers( 1, 1, 'KEY1' );
+       ATEMMixerMEAutoTransition( 1, 1 );
+    end;
+else
+    brcKeyOn = "TRUE";
+    if not ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
+       ATEMMixerMESetNextTransitionLayers( 1, 1, 'KEY1' );
+       ATEMMixerMEAutoTransition( 1, 1 );
+    end;
+end;
+EnviroWrite("BRC_KEY_ON", brcKeyOn);
+XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );
