@@ -35,11 +35,11 @@
 * 11 - WIDE to projectors (radio group 2)
 * 10 - ZOOM to projectors (radio group 2)
 * 9 - FLOOR to projectors (radio group 2)
-* 8 - iMAC preview (radio group 3)
-* 7 - WIDE preview (radio group 3)
-* 6 - ZOOM preview (radio group 3)
-* 5 - FLOOR preview (radio group 3)
-* 4 - auto transition
-* 3 - cut transition
-* 2 - enable USK for text overlay
-* 1 [unused]
+* 8 - toggle USK for text overlay
+* 7 - iMAC preview (radio group 3)
+* 6 - WIDE preview (radio group 3)
+* 5 - ZOOM preview (radio group 3)
+* 4 - FLOOR preview (radio group 3)
+* 3 - toggle auto transitioning
+* 2 - cut transition
+* 1 - auto transition
