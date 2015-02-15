@@ -1,7 +1,7 @@
 -- $$USES "BRC_TOOLS"
 
-EnviroWrite("BRC_AUTO_ON", "TRUE");
-EnviroWrite("BRC_KEY_ON", "FALSE");
+EnviroWrite( "BRC_AUTO_ON", "TRUE" );
+EnviroWrite( "BRC_KEY_ON", "FALSE" );
 
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );

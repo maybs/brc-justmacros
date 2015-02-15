@@ -1,7 +1,7 @@
 -- $$USES "BRC_TOOLS"
 
 local brcKeyOn;
-if EnviroRead("BRC_KEY_ON") == "TRUE" then
+if EnviroRead( "BRC_KEY_ON" ) == "TRUE" then
     brcKeyOn = "FALSE";
     if ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
        ATEMMixerMESetNextTransitionLayers( 1, 1, 'KEY1' );
@@ -14,5 +14,5 @@ else
        ATEMMixerMEAutoTransition( 1, 1 );
     end;
 end;
-EnviroWrite("BRC_KEY_ON", brcKeyOn);
+EnviroWrite( "BRC_KEY_ON", brcKeyOn );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );

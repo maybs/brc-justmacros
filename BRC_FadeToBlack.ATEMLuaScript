@@ -1,17 +1,12 @@
 -- $$USES "BRC_TOOLS"
 CLS();
 
-if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
-  ATEMMixerMECut( 1, 1 );
-  Sleep(60);
-end;
+BRCFinishActiveTransition();
 
-if (not ATEMMixerMEGetFadedToBlack( 1, 1 )) then
+if not ATEMMixerMEGetFadedToBlack( 1, 1 ) then
     ATEMMixerMEFadeToBlack( 1, 1 );
 end;
 
-ATEMMixerAUXSetInput( 1, 1, 1 );
-                                        
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'true' );
@@ -20,11 +15,14 @@ XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, EnviroRead("BRC_KEY_ON") == "TRUE" );
+XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, EnviroRead("BRC_KEY_ON") );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_ON, EnviroRead("BRC_AUTO_ON") == "TRUE" );
+XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_ON, EnviroRead("BRC_AUTO_ON") );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_CUT, 'false' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_AUTO, 'false' );
+
+Sleep( 1000 );
+ATEMMixerAUXSetInput( 1, 1, 1 );

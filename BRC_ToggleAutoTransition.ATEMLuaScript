@@ -1,10 +1,10 @@
 -- $$USES "BRC_TOOLS"
 
 local brcAutoOn;
-if EnviroRead("BRC_AUTO_ON") == "TRUE" then
+if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
     brcAutoOn = "FALSE";
 else
     brcAutoOn = "TRUE";
 end;
-EnviroWrite("BRC_AUTO_ON", brcAutoOn);
+EnviroWrite( "BRC_AUTO_ON", brcAutoOn );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_TRANSITION_ON, brcAutoOn );

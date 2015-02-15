@@ -9,7 +9,7 @@ BRC_BUTTON_PROJECT_FLOOR = 9;
 BRC_BUTTON_KEY_ON = 8;
 BRC_BUTTON_PREVIEW_COMPUTER = 7;
 BRC_BUTTON_PREVIEW_WIDE = 6;
-BRC_BUTTON_PREVIEW_ZOOM = 5;       
+BRC_BUTTON_PREVIEW_ZOOM = 5;
 BRC_BUTTON_PREVIEW_FLOOR = 4;
 BRC_BUTTON_AUTO_TRANSITION_ON = 3;
 BRC_BUTTON_TRANSITION_CUT = 2;
@@ -18,14 +18,14 @@ BRC_BUTTON_TRANSITION_AUTO = 1;
 -- -----------------------------------------------------------------------------------------------------------------------
 -- ATEM input mapping:
 -- 1 = black
--- 2 = in 1                   
+-- 2 = in 1
 -- 3 = in 2
 -- 4 = in 3
 -- 5 = in 4
 -- 6 = in 5
 -- 7 = in 6
 -- 8 = in 7
--- 9 = in 8            
+-- 9 = in 8
 -- 10 = color bars
 -- 11 = color 1
 -- 12 = color 2
@@ -34,7 +34,7 @@ BRC_BUTTON_TRANSITION_AUTO = 1;
 -- 15 = media player 2
 -- 16 = media player 2 key
 -- 17 = key 1 mask
--- 18 = dsk 1 mask                                  
+-- 18 = dsk 1 mask
 -- 19 = dsk2 mask
 -- 20 = clean feed 1
 -- 21 = clean feed 2
@@ -50,97 +50,62 @@ BRC_INPUT_COMPUTER_SLAVE = 5;
 BRC_INPUT_PROGRAM = 23;
 BRC_AUDIO_RCA = 9;
 
-function BRCProjectCameraFloor ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'true' );
+BRC_PREVIEW_BUTTONS = { BRC_BUTTON_PREVIEW_COMPUTER, BRC_BUTTON_PREVIEW_WIDE, BRC_BUTTON_PREVIEW_ZOOM,
+                        BRC_BUTTON_PREVIEW_FLOOR};
+BRC_PROJECT_BUTTONS = { BRC_BUTTON_PROJECT_COMPUTER, BRC_BUTTON_PROJECT_WIDE, BRC_BUTTON_PROJECT_ZOOM,
+                        BRC_BUTTON_PROJECT_FLOOR };
+BRC_SCENE_BUTTONS = { BRC_BUTTON_BAND, BRC_BUTTON_TALK, BRC_BUTTON_VIDEO };
 
-    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_CAMERA_FLOOR );
-end;
-
-function BRCProjectCameraWide ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
-
-    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_CAMERA_WIDE );
-end;
-
-function BRCProjectCameraZoom ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
-
-    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_CAMERA_CENTER );
-end;
-
-function BRCProjectComputer ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
-
-    ATEMMixerAUXSetInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );
-end;
-
-function BRCPreviewCameraFloor ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'true' );
-
-    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_FLOOR );
-    if (EnviroRead("BRC_AUTO_ON") == "TRUE") then
-        BRCTransitionAuto();
-    end;
-end;
-
-
-function BRCPreviewCameraWide ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-
-    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_WIDE );
-    if (EnviroRead("BRC_AUTO_ON") == "TRUE") then
-        BRCTransitionAuto();
-    end;
-end;
-
-function BRCPreviewCameraZoom ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-
-    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_CAMERA_CENTER );
-    if (EnviroRead("BRC_AUTO_ON") == "TRUE") then
-        BRCTransitionAuto();
-    end;
-end;
-
-function BRCPreviewComputer ()
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-
-    ATEMMixerMESetPreviewInput( 1, 1, BRC_INPUT_COMPUTER_MASTER );
-    if (EnviroRead("BRC_AUTO_ON") == "TRUE") then
-        BRCTransitionAuto();
-    end;
-end;
-
-function BRCTransitionAuto ()                                                 
+function BRCFinishActiveTransition ()
     if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
-      ATEMMixerMECut( 1, 1 );
-      Sleep(60);
+        ATEMMixerMECut( 1, 1 );
+        Sleep( 60 );
+    end;
+end;
+
+function BRCPreview(button, input)
+    BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, button );
+    ATEMMixerMESetPreviewInput( 1, 1, input );
+    if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
+        BRCTransition( "auto", EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
+    end;
+end;
+
+function BRCProject(button, input)
+    BRCSetLEDRadioGroup( BRC_PROJECT_BUTTONS, button );
+    ATEMMixerAUXSetInput( 1, 1, input );
+end;
+
+function BRCSetLEDRadioGroup (buttons, activeButton)
+    for i, button in ipairs( buttons ) do
+        local state = button == activeButton and "TRUE" or "FALSE";
+        XKeysSetButtonBlueLEDState( 1, button, state );
+    end;
+end;
+
+function BRCTransition (type, wantKey)
+    BRCFinishActiveTransition();
+
+    local keyIsOn = ATEMMixerMEKeyGetOnAir( 1, 1, 1 );
+    local transitionLayers;
+    if keyIsOn and wantKey or not keyIsOn and not wantKey then
+        transitionLayers = 'BACKGROUND';
+    else
+        transitionLayers = 'BACKGROUND, KEY1';
+    end;
+    ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
+
+    if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
+        ATEMMixerMECut( 1, 1 );
+        Sleep( 60 );
+        ATEMMixerMEFadeToBlack( 1, 1 );
+    elseif type == "cut" then
+        ATEMMixerMECut( 1, 1 );
+    else
+        ATEMMixerMEAutoTransition( 1, 1 );
     end;
 
-    ATEMMixerMESetNextTransitionLayers( 1, 1, 'BACKGROUND' );
-    ATEMMixerMEAutoTransition( 1, 1 );
+    local brcKeyOn = wantKey and "TRUE" or "FALSE";
+    EnviroWrite( "BRC_KEY_ON", brcKeyOn );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );
 end;

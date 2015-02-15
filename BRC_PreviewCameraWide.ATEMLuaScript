@@ -1,3 +1,3 @@
 -- $$USES "BRC_TOOLS"
 
-BRCPreviewCameraWide();
+BRCPreview( BRC_BUTTON_PREVIEW_WIDE, BRC_INPUT_CAMERA_WIDE );

@@ -3,28 +3,8 @@ CLS();
 
 ATEMMixerAudioSetInputGain( 1, BRC_AUDIO_RCA, 0 );
 
-if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
-  ATEMMixerMECut( 1, 1 );
-  Sleep(60);
-end;
-
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'false' );
-
+BRCFinishActiveTransition();
+BRCSetLEDRadioGroup( BRC_SCENE_BUTTONS, BRC_BUTTON_VIDEO );
 BRCProjectComputer();
 BRCPreviewComputer();
-                        
-if ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
-   ATEMMixerMESetNextTransitionLayers( 1, 1, 'BACKGROUND, KEY1' );
-else
-   ATEMMixerMESetNextTransitionLayers( 1, 1, 'BACKGROUND' );
-end;
-                                                            
-if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
-    ATEMMixerMECut( 1, 1 );
-    Sleep(60);
-    ATEMMixerMEFadeToBlack( 1, 1 );
-else
-    ATEMMixerMEAutoTransition( 1, 1 );
-end;
+BRCTransition( "auto", false );
