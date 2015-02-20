@@ -96,6 +96,7 @@ function BRCTransition (type, wantKey)
     ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
 
     if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
+    VSLog("faded");
         ATEMMixerMECut( 1, 1 );
         Sleep( 60 );
         ATEMMixerMEFadeToBlack( 1, 1 );

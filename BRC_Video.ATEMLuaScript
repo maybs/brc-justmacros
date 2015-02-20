@@ -5,6 +5,6 @@ ATEMMixerAudioSetInputGain( 1, BRC_AUDIO_RCA, 0 );
 
 BRCFinishActiveTransition();
 BRCSetLEDRadioGroup( BRC_SCENE_BUTTONS, BRC_BUTTON_VIDEO );
-BRCProjectComputer();
-BRCPreviewComputer();
+BRCProject( BRC_BUTTON_PROJECT_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
+BRCPreview( BRC_BUTTON_PREVIEW_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCTransition( "auto", false );

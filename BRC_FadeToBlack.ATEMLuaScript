@@ -6,7 +6,7 @@ BRCFinishActiveTransition();
 if not ATEMMixerMEGetFadedToBlack( 1, 1 ) then
     ATEMMixerMEFadeToBlack( 1, 1 );
 end;
-
+                  
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );
 XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'true' );
