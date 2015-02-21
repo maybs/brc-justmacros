@@ -7,4 +7,4 @@ BRCFinishActiveTransition();
 BRCSetLEDRadioGroup( BRC_SCENE_BUTTONS, BRC_BUTTON_BAND );
 BRCProject( BRC_BUTTON_PROJECT_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCPreview( BRC_BUTTON_PREVIEW_WIDE, BRC_INPUT_CAMERA_WIDE );
-BRCTransition( "auto", false );
+BRCTransition( "auto", true );

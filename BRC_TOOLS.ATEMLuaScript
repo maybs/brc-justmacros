@@ -63,11 +63,11 @@ function BRCFinishActiveTransition ()
     end;
 end;
 
-function BRCPreview(button, input)
+function BRCPreview(button, input, autoTransition)
     BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, button );
     ATEMMixerMESetPreviewInput( 1, 1, input );
-    if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
-        BRCTransition( "auto", EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
+    if autoTransition then
+        BRCTransition( autoTransition, EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
     end;
 end;
 
@@ -96,7 +96,6 @@ function BRCTransition (type, wantKey)
     ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
 
     if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
-    VSLog("faded");
         ATEMMixerMECut( 1, 1 );
         Sleep( 60 );
         ATEMMixerMEFadeToBlack( 1, 1 );

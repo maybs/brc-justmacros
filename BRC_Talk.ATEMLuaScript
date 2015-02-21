@@ -3,8 +3,8 @@ CLS();
 
 ATEMMixerAudioSetInputGain( 1, BRC_AUDIO_RCA, 4 );
 
-BRCFinishActiveTransition(); 
+BRCFinishActiveTransition();
 BRCSetLEDRadioGroup( BRC_SCENE_BUTTONS, BRC_BUTTON_TALK );
 BRCProject( BRC_BUTTON_PROJECT_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCPreview( BRC_BUTTON_PREVIEW_ZOOM, BRC_INPUT_CAMERA_CENTER );
-BRCTransition( "auto", false );
+BRCTransition( "auto", true );
