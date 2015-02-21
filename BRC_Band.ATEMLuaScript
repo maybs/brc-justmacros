@@ -1,7 +1,11 @@
 -- $$USES "BRC_TOOLS"
 CLS();
 
-ATEMMixerAudioSetInputGain( 1, BRC_AUDIO_RCA, -8 );
+if ATEMMixerCount() > 0 then
+    ATEMMixerAudioSetInputGain( 1, BRC_AUDIO_RCA, BRC_AUDIO_LEVEL_BAND );
+else
+    VSLog( "Set audio level to " .. BRC_AUDIO_LEVEL_BAND );
+end;
 
 BRCFinishActiveTransition();
 BRCSetLEDRadioGroup( BRC_SCENE_BUTTONS, BRC_BUTTON_BAND );

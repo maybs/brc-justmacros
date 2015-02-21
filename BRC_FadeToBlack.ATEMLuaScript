@@ -3,26 +3,30 @@ CLS();
 
 BRCFinishActiveTransition();
 
-if not ATEMMixerMEGetFadedToBlack( 1, 1 ) then
-    ATEMMixerMEFadeToBlack( 1, 1 );
+if XKeysPanelCount() > 0 then
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'true' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BLACK, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, EnviroRead("BRC_KEY_ON") );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_ON, EnviroRead("BRC_AUTO_ON") );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_CUT, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_AUTO, 'false' );
 end;
-                  
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'true' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BLACK, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_WIDE, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_ZOOM, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, EnviroRead("BRC_KEY_ON") );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_WIDE, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_ZOOM, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_ON, EnviroRead("BRC_AUTO_ON") );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_CUT, 'false' );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_AUTO, 'false' );
 
-Sleep( 1000 );
-ATEMMixerAUXSetInput( 1, 1, 1 );
+if ATEMMixerCount() > 0 then
+    if not ATEMMixerMEGetFadedToBlack( 1, 1 ) then
+        ATEMMixerMEFadeToBlack( 1, 1 );
+    end;
+
+    Sleep( 1000 );
+    ATEMMixerAUXSetInput( 1, 1, 1 );
+end;

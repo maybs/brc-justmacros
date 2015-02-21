@@ -7,4 +7,8 @@ else
     brcAutoOn = "TRUE";
 end;
 EnviroWrite( "BRC_AUTO_ON", brcAutoOn );
-XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_TRANSITION_ON, brcAutoOn );
+if XKeysPanelCount() > 0 then
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_TRANSITION_ON, brcAutoOn );
+else
+    VSLog("Auto transitioning is now " .. (brcAutoOn == "TRUE" and "ON" or "OFF"))
+end;

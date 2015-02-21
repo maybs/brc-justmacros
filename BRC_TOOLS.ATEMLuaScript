@@ -1,3 +1,7 @@
+BRC_AUDIO_LEVEL_BAND = -8;
+BRC_AUDIO_LEVEL_TALK = 4;
+BRC_AUDIO_LEVEL_VIDEO = 0;
+
 BRC_BUTTON_VIDEO = 16;
 BRC_BUTTON_BAND = 15;
 BRC_BUTTON_TALK = 14;
@@ -57,7 +61,7 @@ BRC_PROJECT_BUTTONS = { BRC_BUTTON_PROJECT_COMPUTER, BRC_BUTTON_PROJECT_WIDE, BR
 BRC_SCENE_BUTTONS = { BRC_BUTTON_BAND, BRC_BUTTON_TALK, BRC_BUTTON_VIDEO };
 
 function BRCFinishActiveTransition ()
-    if ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
+    if ATEMMixerCount() > 0 and ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
         ATEMMixerMECut( 1, 1 );
         Sleep( 60 );
     end;
@@ -65,7 +69,11 @@ end;
 
 function BRCPreview(button, input, autoTransition)
     BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, button );
-    ATEMMixerMESetPreviewInput( 1, 1, input );
+    if ATEMMixerCount() > 0 then
+        ATEMMixerMESetPreviewInput( 1, 1, input );
+    else
+        VSLog("Set preview to input " .. input);
+    end;
     if autoTransition then
         BRCTransition( autoTransition, EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
     end;
@@ -73,39 +81,52 @@ end;
 
 function BRCProject(button, input)
     BRCSetLEDRadioGroup( BRC_PROJECT_BUTTONS, button );
-    ATEMMixerAUXSetInput( 1, 1, input );
+    if ATEMMixerCount() > 0 then
+        ATEMMixerAUXSetInput( 1, 1, input );
+    else
+        VSLog("Set AUX1 output to input " .. input);
+    end;
 end;
 
 function BRCSetLEDRadioGroup (buttons, activeButton)
-    for i, button in ipairs( buttons ) do
-        local state = button == activeButton and "TRUE" or "FALSE";
-        XKeysSetButtonBlueLEDState( 1, button, state );
+    if XKeysPanelCount() > 0 then
+        for i, button in ipairs( buttons ) do
+            local state = button == activeButton and "TRUE" or "FALSE";
+            XKeysSetButtonBlueLEDState( 1, button, state );
+        end;
     end;
 end;
 
 function BRCTransition (type, wantKey)
-    BRCFinishActiveTransition();
-
-    local keyIsOn = ATEMMixerMEKeyGetOnAir( 1, 1, 1 );
+    local atemConnected = ATEMMixerCount() > 0;
+    local keyIsOn = atemConnected and ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) or
+            not atemConnected and EnviroRead( "BRC_KEY_ON" ) == "TRUE";
     local transitionLayers;
     if keyIsOn and wantKey or not keyIsOn and not wantKey then
         transitionLayers = 'BACKGROUND';
     else
         transitionLayers = 'BACKGROUND, KEY1';
     end;
-    ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
-
-    if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
-        ATEMMixerMECut( 1, 1 );
-        Sleep( 60 );
-        ATEMMixerMEFadeToBlack( 1, 1 );
-    elseif type == "cut" then
-        ATEMMixerMECut( 1, 1 );
-    else
-        ATEMMixerMEAutoTransition( 1, 1 );
-    end;
 
     local brcKeyOn = wantKey and "TRUE" or "FALSE";
     EnviroWrite( "BRC_KEY_ON", brcKeyOn );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );
+    if XKeysPanelCount() > 0 then
+        XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );
+    end;
+
+    if atemConnected then
+        ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
+
+        if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
+            ATEMMixerMECut( 1, 1 );
+            Sleep( 60 );
+            ATEMMixerMEFadeToBlack( 1, 1 );
+        elseif type == "cut" then
+            ATEMMixerMECut( 1, 1 );
+        else
+            ATEMMixerMEAutoTransition( 1, 1 );
+        end;
+    else
+        VSLog("Transition " .. transitionLayers .. " using " .. type .. ".  Key will be " .. (wantKey and "ON" or "OFF") .. ".");
+    end;
 end;
