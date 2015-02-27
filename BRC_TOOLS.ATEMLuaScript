@@ -75,6 +75,7 @@ function BRCPreview(button, input, autoTransition)
         VSLog("Set preview to input " .. input);
     end;
     if autoTransition then
+        BRCFinishActiveTransition();
         BRCTransition( autoTransition, EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
     end;
 end;
