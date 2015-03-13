@@ -1,3 +1,0 @@
--- $$USES "BRC_TOOLS"
-
-BRCPreview( BRC_BUTTON_PREVIEW_RIGHT, BRC_INPUT_CAMERA_RIGHT, EnviroRead( "BRC_AUTO_ON" ) == "TRUE" and "cut" );

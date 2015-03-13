@@ -14,7 +14,7 @@ if XKeysPanelCount() > 0 then
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_FLOOR, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, EnviroRead("BRC_KEY_ON") );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_DRUMS, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_STAGE, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_CENTER, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_ON, EnviroRead("BRC_AUTO_ON") );

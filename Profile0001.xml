@@ -75,11 +75,11 @@
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
-            <macroname>BRC_PreviewCameraFloor</macroname>
+            <macroname>BRC_PreviewCameraStage</macroname>
             <caption2></caption2>
             <onbuttondown></onbuttondown>
             <onbuttonup></onbuttonup>
-            <description>FLOOR</description>
+            <description>STAGE</description>
             <sourcenumber>0</sourcenumber>
             <shiftedsourcenumber>0</shiftedsourcenumber>
             <transitionmode>Mix</transitionmode>
@@ -94,50 +94,6 @@
         </button>
         <button>
             <no>5</no>
-            <type>MACRO</type>
-            <caption1></caption1>
-            <caption2></caption2>
-            <macroname>BRC_PreviewCameraDrums</macroname>
-            <caption2></caption2>
-            <onbuttondown></onbuttondown>
-            <onbuttonup></onbuttonup>
-            <description>DRUMS</description>
-            <sourcenumber>0</sourcenumber>
-            <shiftedsourcenumber>0</shiftedsourcenumber>
-            <transitionmode>Mix</transitionmode>
-            <shiftedtransitionmode>Mix</shiftedtransitionmode>
-            <mixernumber>0</mixernumber>
-            <menumber>0</menumber>
-            <keynumber>0</keynumber>
-            <dsknumber>0</dsknumber>
-            <mpnumber>0</mpnumber>
-            <auxnumber>0</auxnumber>
-            <keyframe>Unknown</keyframe>
-        </button>
-        <button>
-            <no>6</no>
-            <type>MACRO</type>
-            <caption1></caption1>
-            <caption2></caption2>
-            <macroname>BRC_PreviewCameraRight</macroname>
-            <caption2></caption2>
-            <onbuttondown></onbuttondown>
-            <onbuttonup></onbuttonup>
-            <description>RIGHT</description>
-            <sourcenumber>0</sourcenumber>
-            <shiftedsourcenumber>0</shiftedsourcenumber>
-            <transitionmode>Mix</transitionmode>
-            <shiftedtransitionmode>Mix</shiftedtransitionmode>
-            <mixernumber>0</mixernumber>
-            <menumber>0</menumber>
-            <keynumber>0</keynumber>
-            <dsknumber>0</dsknumber>
-            <mpnumber>0</mpnumber>
-            <auxnumber>0</auxnumber>
-            <keyframe>Unknown</keyframe>
-        </button>
-        <button>
-            <no>7</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -159,7 +115,29 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>8</no>
+            <no>6</no>
+            <type>MACRO</type>
+            <caption1></caption1>
+            <caption2></caption2>
+            <macroname>BRC_PreviewCameraFloor</macroname>
+            <caption2></caption2>
+            <onbuttondown></onbuttondown>
+            <onbuttonup></onbuttonup>
+            <description>FLOOR</description>
+            <sourcenumber>0</sourcenumber>
+            <shiftedsourcenumber>0</shiftedsourcenumber>
+            <transitionmode>Mix</transitionmode>
+            <shiftedtransitionmode>Mix</shiftedtransitionmode>
+            <mixernumber>0</mixernumber>
+            <menumber>0</menumber>
+            <keynumber>0</keynumber>
+            <dsknumber>0</dsknumber>
+            <mpnumber>0</mpnumber>
+            <auxnumber>0</auxnumber>
+            <keyframe>Unknown</keyframe>
+        </button>
+        <button>
+            <no>7</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -181,7 +159,7 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>9</no>
+            <no>8</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -203,7 +181,7 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>10</no>
+            <no>9</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -225,7 +203,7 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>11</no>
+            <no>10</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -247,7 +225,7 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>12</no>
+            <no>11</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -269,7 +247,7 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>13</no>
+            <no>12</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -278,6 +256,28 @@
             <onbuttondown></onbuttondown>
             <onbuttonup></onbuttonup>
             <description>iMAC</description>
+            <sourcenumber>0</sourcenumber>
+            <shiftedsourcenumber>0</shiftedsourcenumber>
+            <transitionmode>Mix</transitionmode>
+            <shiftedtransitionmode>Mix</shiftedtransitionmode>
+            <mixernumber>0</mixernumber>
+            <menumber>0</menumber>
+            <keynumber>0</keynumber>
+            <dsknumber>0</dsknumber>
+            <mpnumber>0</mpnumber>
+            <auxnumber>0</auxnumber>
+            <keyframe>Unknown</keyframe>
+        </button>
+        <button>
+            <no>13</no>
+            <type>MACRO</type>
+            <caption1></caption1>
+            <caption2></caption2>
+            <macroname>BRC_FadeToBlack</macroname>
+            <caption2></caption2>
+            <onbuttondown></onbuttondown>
+            <onbuttonup></onbuttonup>
+            <description>BLACK</description>
             <sourcenumber>0</sourcenumber>
             <shiftedsourcenumber>0</shiftedsourcenumber>
             <transitionmode>Mix</transitionmode>

@@ -15,7 +15,7 @@ if XKeysPanelCount() > 0 then
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_LEFT, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_CENTER, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_RIGHTS, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_DRUMS, 'false' );
+    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_STAGE, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_TRANSITION_ON, 'true' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_CUT, 'false' );
