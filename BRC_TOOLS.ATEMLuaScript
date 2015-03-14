@@ -47,7 +47,7 @@ BRC_BUTTON_TRANSITION_CUT = 1;
 -- 23 = preview
 -- -----------------------------------------------------------------------------------------------------------------------
 BRC_INPUT_CAMERA_CENTER = 3;
-BRC_INPUT_CAMERA_FLOOR = 2;
+BRC_INPUT_CAMERA_FLOOR = 6;
 BRC_INPUT_CAMERA_LEFT = 7;
 BRC_INPUT_CAMERA_STAGE = 8;
 BRC_INPUT_COMPUTER_MASTER = 4;
