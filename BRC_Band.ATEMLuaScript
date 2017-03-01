@@ -1,0 +1,10 @@
+-- $$USES "BRC_TOOLS"
+CLS();
+
+BRCFinishActiveTransition();
+BRCSetLEDRadioGroup( BRC_SCENE_BUTTONS, BRC_BUTTON_BAND );
+BRCProject( BRC_BUTTON_PROJECT_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
+if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
+    BRCPreview( BRC_BUTTON_PREVIEW_CENTER, BRC_INPUT_CAMERA_CENTER);
+end;
+BRCTransition( "auto", true );

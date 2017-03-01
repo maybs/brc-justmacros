@@ -22,12 +22,14 @@
 * 16 - VIDEO (radio group 1)<br>
  `program` = master ProPresenter<br>
  `aux1` = master ProPresenter<br>
-* 15 - LIVE (radio group 1)<br>
+* 15 - BAND (radio group 1)<br>
+  `program` = camera (CENTER), USK slave ProPresenter<br>
+  `aux1` = master ProPresenter<br>
+* 14 - TALK (radio group 1)<br>
  `program` = camera (CENTER), USK slave ProPresenter<br>
- `aux1` = master ProPresenter<br>
-* 14 - BLACK (fade to black)
-* 13 - iMAC to projectors (radio group 2)
-* 12 - CENTER to projectors (radio group 2)
+ `aux1` = `program`<br>
+* 13 - BLACK (fade to black)
+* 12 - iMAC to projectors (radio group 2)
 * 11 - program to projectors (radio group 2)
 * 10 - toggle USK for text overlay
 * 9 - iMAC preview (radio group 3)
