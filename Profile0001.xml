@@ -251,28 +251,6 @@
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
-            <macroname>BRC_ProjectCameraCenter</macroname>
-            <caption2></caption2>
-            <onbuttondown></onbuttondown>
-            <onbuttonup></onbuttonup>
-            <description>CENTER</description>
-            <sourcenumber>0</sourcenumber>
-            <shiftedsourcenumber>0</shiftedsourcenumber>
-            <transitionmode>Mix</transitionmode>
-            <shiftedtransitionmode>Mix</shiftedtransitionmode>
-            <mixernumber>0</mixernumber>
-            <menumber>0</menumber>
-            <keynumber>0</keynumber>
-            <dsknumber>0</dsknumber>
-            <mpnumber>0</mpnumber>
-            <auxnumber>0</auxnumber>
-            <keyframe>Unknown</keyframe>
-        </button>
-        <button>
-            <no>13</no>
-            <type>MACRO</type>
-            <caption1></caption1>
-            <caption2></caption2>
             <macroname>BRC_ProjectComputer</macroname>
             <caption2></caption2>
             <onbuttondown></onbuttondown>
@@ -291,7 +269,7 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
-            <no>14</no>
+            <no>13</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
@@ -313,15 +291,37 @@
             <keyframe>Unknown</keyframe>
         </button>
         <button>
+            <no>14</no>
+            <type>MACRO</type>
+            <caption1></caption1>
+            <caption2></caption2>
+            <macroname>BRC_Talk</macroname>
+            <caption2></caption2>
+            <onbuttondown></onbuttondown>
+            <onbuttonup></onbuttonup>
+            <description>TALK</description>
+            <sourcenumber>0</sourcenumber>
+            <shiftedsourcenumber>0</shiftedsourcenumber>
+            <transitionmode>Mix</transitionmode>
+            <shiftedtransitionmode>Mix</shiftedtransitionmode>
+            <mixernumber>0</mixernumber>
+            <menumber>0</menumber>
+            <keynumber>0</keynumber>
+            <dsknumber>0</dsknumber>
+            <mpnumber>0</mpnumber>
+            <auxnumber>0</auxnumber>
+            <keyframe>Unknown</keyframe>
+        </button>
+        <button>
             <no>15</no>
             <type>MACRO</type>
             <caption1></caption1>
             <caption2></caption2>
-            <macroname>BRC_Live</macroname>
+            <macroname>BRC_Band</macroname>
             <caption2></caption2>
             <onbuttondown></onbuttondown>
             <onbuttonup></onbuttonup>
-            <description>LIVE</description>
+            <description>BAND</description>
             <sourcenumber>0</sourcenumber>
             <shiftedsourcenumber>0</shiftedsourcenumber>
             <transitionmode>Mix</transitionmode>
