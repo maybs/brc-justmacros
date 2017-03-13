@@ -66,7 +66,7 @@ BRC_SCENE_BUTTONS = { BRC_BUTTON_BAND, BRC_BUTTON_BLACK, BRC_BUTTON_TALK, BRC_BU
 
 function BRCCameraPreset(cameraIp, pageNumber, presetNumber)
     local preset = (pageNumber - 1) * 10 + (presetNumber - 1)
-    HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23R" .. preset ... "&res=1" );
+    HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23R" .. preset .. "&res=1" );
 end;
 
 function BRCFinishActiveTransition ()
