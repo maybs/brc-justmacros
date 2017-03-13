@@ -19,6 +19,8 @@ BRC_BUTTON_AUTO_TRANSITION_ON = 3;
 BRC_BUTTON_TRANSITION_AUTO = 2;
 BRC_BUTTON_TRANSITION_CUT = 1;
 
+BRC_CAMERA_IP_CENTER = "10.0.1.201";
+
 -- -----------------------------------------------------------------------------------------------------------------------
 -- ATEM input mapping:
 -- 1 = black
@@ -61,6 +63,11 @@ BRC_PREVIEW_BUTTONS = { BRC_BUTTON_PREVIEW_CENTER, BRC_BUTTON_PREVIEW_COMPUTER, 
                         BRC_BUTTON_PREVIEW_LEFT, BRC_BUTTON_PREVIEW_RIGHT, BRC_BUTTON_PREVIEW_STAGE };
 BRC_PROJECT_BUTTONS = { BRC_BUTTON_PROJECT_COMPUTER, BRC_BUTTON_PROJECT_PROGRAM };
 BRC_SCENE_BUTTONS = { BRC_BUTTON_BAND, BRC_BUTTON_BLACK, BRC_BUTTON_TALK, BRC_BUTTON_VIDEO };
+
+function BRCCameraPreset(cameraIp, pageNumber, presetNumber)
+    local preset = (pageNumber - 1) * 10 + (presetNumber - 1)
+    HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23R" .. preset ... "&res=1" );
+end;
 
 function BRCFinishActiveTransition ()
     if ATEMMixerCount() > 0 and ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
