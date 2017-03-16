@@ -7,5 +7,6 @@ BRCProject( BRC_BUTTON_PROJECT_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCPreview( BRC_BUTTON_PREVIEW_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCTransition( "auto", false );
 if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
+    Sleep(1000);
     BRCCameraPreset( BRC_CAMERA_IP_CENTER, 6, 8 );
 end;
