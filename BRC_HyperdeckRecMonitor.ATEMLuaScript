@@ -8,11 +8,15 @@ EnviroWrite( "BRC_HYPERDECK_REC_MONITOR_ACTIVE", "TRUE");
 VSLog( "Hyperdeck record monitoring started" );
 
 while EnviroRead( "BRC_HYPERDECK_REC_MONITOR_ACTIVE" ) == "TRUE" do
-    Sleep(150);
-    if HyperdeckGetStatus( 1 ) == "recording" then
-      XKeysSetPanelRedLEDEnabled( 1, "TRUE" )
+    Sleep(500);
+    if HyperDeckGetStatus( 1 ) == "recording" then
+      if XKeysGetPanelRedLEDEnabled( 1 ) ~= true then
+        XKeysSetPanelRedLEDEnabled( 1, "TRUE" )
+      end;
     else
-      XKeysSetPanelRedLEDEnabled( 1, "FALSE" )
+      if XKeysGetPanelRedLEDEnabled( 1 ) == true then
+        XKeysSetPanelRedLEDEnabled( 1, "FALSE" )
+      end;
     end;
 end;
 
