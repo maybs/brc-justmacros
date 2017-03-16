@@ -1,3 +1,6 @@
 -- $$USES "BRC_TOOLS"
 
 BRCPreview( BRC_BUTTON_PREVIEW_LEFT, BRC_INPUT_CAMERA_LEFT, EnviroRead( "BRC_AUTO_ON" ) == "TRUE" and "cut" );
+if EnviroRead( "BRC_AUTO_ON" ) ~= "TRUE" then
+    BRCCameraControllerSelectCamera(BRC_CAMERA_NUMBER_LEFT);
+end;
