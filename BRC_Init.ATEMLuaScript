@@ -21,3 +21,6 @@ if XKeysPanelCount() > 0 then
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_AUTO, 'false' );
     XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_CUT, 'false' );
 end;
+
+HyperDeckAddDevice( "10.0.1.129", "HYPER01" );
+ScriptExecuteBG( "BRC_HyperdeckRecMonitor" );
