@@ -1,0 +1,28 @@
+-- $$USES "BRC_TOOLS"
+
+if EnviroRead( "BRC_ATEM_MONITOR_ACTIVE" ) == "TRUE" then
+    EnviroWrite( "BRC_ATEM_MONITOR_ACTIVE", "FALSE");
+    Sleep(150);
+end;
+
+EnviroWrite( "BRC_ATEM_MONITOR_ACTIVE", "TRUE");
+VSLog( "ATEM monitoring started" );
+
+while EnviroRead( "BRC_ATEM_MONITOR_ACTIVE" ) == "TRUE" do
+    Sleep(250);
+    if ATEMMixerCount() < 1 then
+      break;
+    end;
+
+    if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
+      break;
+    end;
+
+    local previewInput = ATEMMixerMEGetPreviewInput( 1, 1 );
+    local previewButton = BRC_INPUT_BUTTON[previewInput];
+    if previewButton then
+      BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, previewButton );
+    end;
+end;
+
+VSLog( "ATEM monitoring stopped" );
