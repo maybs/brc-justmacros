@@ -5,10 +5,11 @@ local programInput = ATEMMixerCount() > 0 and ATEMMixerMEGetProgramInput( 1, 1 )
 BRCTransition( "auto", EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
 
 local previewInput = programInput;
-local previewButton = BRC_INPUT_BUTTON[previewInput];
-
+local previewButton = BRCMapInputToButton(previewInput);
+VSLog( "previewInput " .. previewInput );
 if previewButton then
-  BRCCameraControllerSelectCamera(BRC_INPUT_CAMERA_NUMBER[previewInput]);
+  VSLog( "previewButton " .. previewButton );
+  BRCCameraControllerSelectCamera(BRCMapInputToCameraNumber(previewInput));
   Sleep(500);
   BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, previewButton );
 end;
