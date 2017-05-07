@@ -1,5 +1,8 @@
 -- $$USES "BRC_TOOLS"
 
+local xk16 = EnviroRead( "BRC_XK16_Index" );
+local xk24 = EnviroRead( "BRC_XK24_Index" );
+
 local brcAutoOn;
 if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
     brcAutoOn = "FALSE";
@@ -7,8 +10,11 @@ else
     brcAutoOn = "TRUE";
 end;
 EnviroWrite( "BRC_AUTO_ON", brcAutoOn );
-if XKeysPanelCount() > 0 then
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_TRANSITION_ON, brcAutoOn );
+if xk16 > 0 then
+    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_AUTO_TRANSITION_ON, brcAutoOn );
 else
     VSLog("Auto transitioning is now " .. (brcAutoOn == "TRUE" and "ON" or "OFF"))
+end;
+if xk24 > 0 then
+    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_AUTO_TRANSITION_ON, brcAutoOn );
 end;

@@ -1,5 +1,8 @@
 -- $$USES "BRC_TOOLS"
 
+local xk16 = EnviroRead( "BRC_XK16_Index" );
+local xk24 = EnviroRead( "BRC_XK24_Index" );
+
 local brcKeyOn;
 if EnviroRead( "BRC_KEY_ON" ) == "TRUE" then
     brcKeyOn = "FALSE";
@@ -19,6 +22,9 @@ else
     end;
 end;
 EnviroWrite( "BRC_KEY_ON", brcKeyOn );
-if XKeysPanelCount() > 0 then
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );
+if xk16 > 0 then
+    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_KEY_ON, brcKeyOn );
+end;
+if xk24 > 0 then
+    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, brcKeyOn );
 end;
