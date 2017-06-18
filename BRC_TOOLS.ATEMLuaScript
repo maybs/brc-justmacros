@@ -91,6 +91,16 @@ function BRCMapInputToButton(input)
   end;
 end;
 
+function BRCMapInputToXk24Button(input)
+  if input == BRC_INPUT_CAMERA_CENTER then return BRC_BUTTON_XK24_PREVIEW_CENTER
+  elseif input == BRC_INPUT_CAMERA_FLOOR then return BRC_BUTTON_XK24_PREVIEW_FLOOR
+  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_BUTTON_XK24_PREVIEW_LEFT
+  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_XK24_PREVIEW_RIGHT
+  elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_XK24_PREVIEW_DRUMS
+  elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_XK24_PREVIEW_COMPUTER
+  end;
+end;
+
 function BRCMapInputToCameraNumber(input)
   if input == BRC_INPUT_CAMERA_CENTER then return BRC_CAMERA_NUMBER_CENTER
   elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_CAMERA_NUMBER_LEFT
@@ -152,7 +162,7 @@ function BRCProject(button, input)
 end;
 
 function BRCSetLEDRadioGroup (xkeyId, buttons, activeButton)
-    if xkeyId > 0 then
+    if xkeyId > 0 and activeButton then
         for i, button in ipairs( buttons ) do
             local state = button == activeButton and "TRUE" or "FALSE";
             XKeysSetButtonBlueLEDState( xkeyId, button, state );

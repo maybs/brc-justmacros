@@ -16,11 +16,11 @@ while EnviroRead( "BRC_ATEM_MONITOR_ACTIVE" ) == "TRUE" do
     end;
 
     if EnviroRead( "BRC_AUTO_ON" ) ~= "TRUE" then
+      local xk16 = EnviroRead( "BRC_XK16_Index" );
+      local xk24 = EnviroRead( "BRC_XK24_Index" );
       local previewInput = ATEMMixerMEGetPreviewInput( 1, 1 );
-      local previewButton = BRCMapInputToButton(previewInput);
-      if previewButton then
-        BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, previewButton );
-      end;
+      BRCSetLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(previewInput) );
+      BRCSetLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(previewInput) );
     end;
 end;
 
