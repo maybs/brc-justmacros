@@ -19,6 +19,24 @@ BRC_BUTTON_AUTO_TRANSITION_ON = 3;
 BRC_BUTTON_TRANSITION_AUTO = 2;
 BRC_BUTTON_TRANSITION_CUT = 1;
 
+BRC_BUTTON_XK24_VIDEO = 1;
+BRC_BUTTON_XK24_BAND = 2;
+BRC_BUTTON_XK24_TALK = 3;
+BRC_BUTTON_XK24_BLACK = 4;
+BRC_BUTTON_XK24_KEY_ON = 5;
+BRC_BUTTON_XK24_CAMS_ON = 6;
+BRC_BUTTON_XK24_PROJECT_SELECT = 7;
+BRC_BUTTON_XK24_PROJECT_PROGRAM = 8;
+BRC_BUTTON_XK24_PREVIEW_COMPUTER = 13;
+BRC_BUTTON_XK24_PREVIEW_KEYS = 14;
+BRC_BUTTON_XK24_PREVIEW_DRUMS = 15;
+BRC_BUTTON_XK24_AUTO_TRANSITION_ON = 16;
+BRC_BUTTON_XK24_TRANSITION_AUTO = 17;
+BRC_BUTTON_XK24_TRANSITION_CUT = 18;
+BRC_BUTTON_XK24_PREVIEW_LEFT = 19;
+BRC_BUTTON_XK24_PREVIEW_CENTER = 20;
+BRC_BUTTON_XK24_PREVIEW_RIGHT = 21;
+
 BRC_CAMERA_CONTROLLER_IP = "10.0.1.220";
 BRC_CAMERA_IP_CENTER = "10.0.1.202";
 BRC_CAMERA_NUMBER_LEFT = 1;
@@ -63,13 +81,47 @@ BRC_INPUT_COMPUTER_SLAVE = 5;
 BRC_INPUT_PROGRAM = 23;
 BRC_AUDIO_RCA = 9;
 
+function BRCMapInputToButton(input)
+  if input == BRC_INPUT_CAMERA_CENTER then return BRC_BUTTON_PREVIEW_CENTER
+  elseif input == BRC_INPUT_CAMERA_FLOOR then return BRC_BUTTON_PREVIEW_FLOOR
+  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_BUTTON_PREVIEW_LEFT
+  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_PREVIEW_RIGHT
+  elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_PREVIEW_STAGE
+  elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_PREVIEW_COMPUTER
+  end;
+end;
+
+function BRCMapInputToXk24Button(input)
+  if input == BRC_INPUT_CAMERA_CENTER then return BRC_BUTTON_XK24_PREVIEW_CENTER
+  elseif input == BRC_INPUT_CAMERA_FLOOR then return BRC_BUTTON_XK24_PREVIEW_FLOOR
+  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_BUTTON_XK24_PREVIEW_LEFT
+  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_XK24_PREVIEW_RIGHT
+  elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_XK24_PREVIEW_DRUMS
+  elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_XK24_PREVIEW_COMPUTER
+  end;
+end;
+
+function BRCMapInputToCameraNumber(input)
+  if input == BRC_INPUT_CAMERA_CENTER then return BRC_CAMERA_NUMBER_CENTER
+  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_CAMERA_NUMBER_LEFT
+  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_CAMERA_NUMBER_RIGHT
+  end;
+end;
+
 BRC_PREVIEW_BUTTONS = { BRC_BUTTON_PREVIEW_CENTER, BRC_BUTTON_PREVIEW_COMPUTER, BRC_BUTTON_PREVIEW_FLOOR,
                         BRC_BUTTON_PREVIEW_LEFT, BRC_BUTTON_PREVIEW_RIGHT, BRC_BUTTON_PREVIEW_STAGE };
 BRC_PROJECT_BUTTONS = { BRC_BUTTON_PROJECT_COMPUTER, BRC_BUTTON_PROJECT_PROGRAM };
 BRC_SCENE_BUTTONS = { BRC_BUTTON_BAND, BRC_BUTTON_BLACK, BRC_BUTTON_TALK, BRC_BUTTON_VIDEO };
 
+BRC_PREVIEW_XK24_BUTTONS = { BRC_BUTTON_XK24_PREVIEW_CENTER, BRC_BUTTON_XK24_PREVIEW_COMPUTER,
+                             BRC_BUTTON_XK24_PREVIEW_DRUMS, BRC_BUTTON_XK24_PREVIEW_KEYS,
+                             BRC_BUTTON_XK24_PREVIEW_LEFT, BRC_BUTTON_XK24_PREVIEW_RIGHT };
+BRC_SCENE_XK24_BUTTONS = { BRC_BUTTON_XK24_BAND, BRC_BUTTON_XK24_BLACK, BRC_BUTTON_XK24_TALK, BRC_BUTTON_XK24_VIDEO };
+
 function BRCCameraControllerSelectCamera(cameraNumber)
-    HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XCN:01:" .. cameraNumber .. "&res=1" );
+    if cameraNumber then
+      HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XCN:01:" .. cameraNumber .. "&res=1" );
+    end;
 end;
 
 function BRCCameraPreset(cameraIp, pageNumber, presetNumber)
@@ -84,8 +136,11 @@ function BRCFinishActiveTransition ()
     end;
 end;
 
-function BRCPreview(button, input, autoTransition)
-    BRCSetLEDRadioGroup( BRC_PREVIEW_BUTTONS, button );
+function BRCPreview(button, xk24Button, input, autoTransition)
+    local xk16 = EnviroRead( "BRC_XK16_Index" );
+    local xk24 = EnviroRead( "BRC_XK24_Index" );
+    BRCSetLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, button );
+    BRCSetLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, xk24Button );
     if ATEMMixerCount() > 0 then
         ATEMMixerMESetPreviewInput( 1, 1, input );
     else
@@ -98,7 +153,8 @@ function BRCPreview(button, input, autoTransition)
 end;
 
 function BRCProject(button, input)
-    BRCSetLEDRadioGroup( BRC_PROJECT_BUTTONS, button );
+    local xk16 = EnviroRead( "BRC_XK16_Index" );
+    BRCSetLEDRadioGroup( xk16, BRC_PROJECT_BUTTONS, button );
     if ATEMMixerCount() > 0 then
         ATEMMixerAUXSetInput( 1, 1, input );
     else
@@ -106,11 +162,11 @@ function BRCProject(button, input)
     end;
 end;
 
-function BRCSetLEDRadioGroup (buttons, activeButton)
-    if XKeysPanelCount() > 0 then
+function BRCSetLEDRadioGroup (xkeyId, buttons, activeButton)
+    if xkeyId > 0 and activeButton then
         for i, button in ipairs( buttons ) do
             local state = button == activeButton and "TRUE" or "FALSE";
-            XKeysSetButtonBlueLEDState( 1, button, state );
+            XKeysSetButtonBlueLEDState( xkeyId, button, state );
         end;
     end;
 end;
@@ -128,8 +184,13 @@ function BRCTransition (type, wantKey)
 
     local brcKeyOn = wantKey and "TRUE" or "FALSE";
     EnviroWrite( "BRC_KEY_ON", brcKeyOn );
-    if XKeysPanelCount() > 0 then
-        XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, brcKeyOn );
+    local xk16 = EnviroRead( "BRC_XK16_Index" );
+    local xk24 = EnviroRead( "BRC_XK24_Index" );
+    if xk16 > 0 then
+        XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_KEY_ON, brcKeyOn );
+    end;
+    if xk24 > 0 then
+        XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, brcKeyOn );
     end;
 
     if atemConnected then

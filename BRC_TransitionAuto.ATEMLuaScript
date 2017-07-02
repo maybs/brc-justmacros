@@ -1,3 +1,24 @@
 -- $$USES "BRC_TOOLS"
 
+local programInput = ATEMMixerCount() > 0 and ATEMMixerMEGetProgramInput( 1, 1 );
+local xk16 = EnviroRead( "BRC_XK16_Index" );
+local xk24 = EnviroRead( "BRC_XK24_Index" );
+
 BRCTransition( "auto", EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
+
+local previewInput = programInput;
+VSLog( "previewInput " .. previewInput );
+BRCCameraControllerSelectCamera(BRCMapInputToCameraNumber(previewInput));
+Sleep(500);
+
+local previewButton = BRCMapInputToButton(previewInput);
+if previewButton then
+  VSLog( "previewButton " .. previewButton );
+  BRCSetLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, previewButton );
+end;
+
+local previewXk24Button = BRCMapInputToXk24Button(previewInput);
+if previewXk24Button then
+  VSLog( "xk24 previewButton " .. previewXk24Button );
+  BRCSetLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, previewXk24Button );
+end;
