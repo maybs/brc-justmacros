@@ -38,7 +38,9 @@ BRC_BUTTON_XK24_PREVIEW_CENTER = 20;
 BRC_BUTTON_XK24_PREVIEW_RIGHT = 21;
 
 BRC_CAMERA_CONTROLLER_IP = "10.0.1.220";
+BRC_CAMERA_IP_LEFT = "10.0.1.201";
 BRC_CAMERA_IP_CENTER = "10.0.1.202";
+BRC_CAMERA_IP_RIGHT = "10.0.1.203";
 BRC_CAMERA_NUMBER_LEFT = 1;
 BRC_CAMERA_NUMBER_CENTER = 2;
 BRC_CAMERA_NUMBER_RIGHT = 3;
@@ -117,6 +119,7 @@ BRC_PREVIEW_XK24_BUTTONS = { BRC_BUTTON_XK24_PREVIEW_CENTER, BRC_BUTTON_XK24_PRE
                              BRC_BUTTON_XK24_PREVIEW_DRUMS, BRC_BUTTON_XK24_PREVIEW_KEYS,
                              BRC_BUTTON_XK24_PREVIEW_LEFT, BRC_BUTTON_XK24_PREVIEW_RIGHT };
 BRC_SCENE_XK24_BUTTONS = { BRC_BUTTON_XK24_BAND, BRC_BUTTON_XK24_BLACK, BRC_BUTTON_XK24_TALK, BRC_BUTTON_XK24_VIDEO };
+BRC_CAMERA_IPS = { BRC_CAMERA_IP_LEFT, BRC_CAMERA_IP_CENTER, BRC_CAMERA_IP_RIGHT };
 
 function BRCCameraControllerSelectCamera(cameraNumber)
     if cameraNumber then
@@ -127,6 +130,14 @@ end;
 function BRCCameraPreset(cameraIp, pageNumber, presetNumber)
     local preset = (pageNumber - 1) * 10 + (presetNumber - 1)
     HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23R" .. preset .. "&res=1" );
+end;
+
+function BRCCameraTally()
+    local cameraNumber = EnviroRead( "BRC_PREVIEW_CAMERA" ) or 0;
+    for i, cameraIp in ipairs( BRC_CAMERA_IPS ) do
+        local tallyOn = i == cameraNumber and "1" or "0";
+        HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23DA" .. tallyOn .. "&res=1" );
+    end;
 end;
 
 function BRCFinishActiveTransition ()
@@ -146,6 +157,9 @@ function BRCPreview(button, xk24Button, input, autoTransition)
     else
         VSLog("Set preview to input " .. input);
     end;
+
+    EnviroWrite( "BRC_PREVIEW_CAMERA", BRCMapInputToCameraNumber( input ) or 0 );
+
     if autoTransition then
         BRCFinishActiveTransition();
         BRCTransition( autoTransition, EnviroRead( "BRC_KEY_ON" ) == "TRUE" );
@@ -192,6 +206,8 @@ function BRCTransition (type, wantKey)
     if xk24 > 0 then
         XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, brcKeyOn );
     end;
+
+    BRCCameraTally();
 
     if atemConnected then
         ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
