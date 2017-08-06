@@ -127,6 +127,13 @@ function BRCCameraControllerSelectCamera(cameraNumber)
     end;
 end;
 
+function BRCCameraPower(power)
+  local powerOn = power and "1" or "0";
+  for i, cameraIp in ipairs( BRC_CAMERA_IPS ) do
+    HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23O" .. powerOn .. "&res=1" );
+  end;
+end;
+
 function BRCCameraPreset(cameraIp, pageNumber, presetNumber)
     local preset = (pageNumber - 1) * 10 + (presetNumber - 1)
     HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23R" .. preset .. "&res=1" );

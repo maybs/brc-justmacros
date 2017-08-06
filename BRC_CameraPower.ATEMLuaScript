@@ -1,0 +1,4 @@
+-- $$USES "BRC_TOOLS"
+CLS();
+
+BRCCameraPower(true);
