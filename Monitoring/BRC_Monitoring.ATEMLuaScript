@@ -41,7 +41,6 @@ function UpdateLEDs()
   if EnviroRead( "BRC_PROJECT_SELECT_IS_DOWN" ) == "TRUE" then
     -- set blue on all xk24 input buttons?
     -- set blue on project program button?
-    VSLog("pick an input to send to aux");
     if auxInput == BRC_INPUT_PROGRAM then
       BRCSetBlueLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(programInput) );
       BRCSetRedLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(programInput) );
