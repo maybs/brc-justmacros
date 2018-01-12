@@ -2,6 +2,8 @@
 
 EnviroWrite( "BRC_AUTO_ON", "TRUE" );
 EnviroWrite( "BRC_KEY_ON", "FALSE" );
+EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_BLACK );
+EnviroWrite( "BRC_PROJECT_SELECT_IS_DOWN", "FALSE");
 EnviroWrite( "BRC_XK16_INDEX", 0 );
 EnviroWrite( "BRC_XK24_INDEX", 0 );
 
@@ -31,49 +33,23 @@ local xk16 = EnviroRead( "BRC_XK16_Index" );
 VSLog("XK16 " .. xk16);
 if xk16 > 0 then
     VSLog("XK16 init.");
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_VIDEO, 'true' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_BAND, 'true' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_TALK, 'true' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_BLACK, 'true' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PROJECT_PROGRAM, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_KEY_ON, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PREVIEW_LEFT, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PREVIEW_CENTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PREVIEW_RIGHT, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PREVIEW_STAGE, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_AUTO_TRANSITION_ON, 'true' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_TRANSITION_AUTO, 'false' );
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_TRANSITION_CUT, 'false' );
+    for i = 1, 16 do
+      BRCSetBlueLED( xk16, i, false );
+      BRCSetRedLED( xk16, i, false );
+    end;
 end;
 
 local xk24 = EnviroRead( "BRC_XK24_Index" );
 VSLog("XK24 " .. xk24);
 if xk24 > 0 then
     VSLog("XK24 init.");
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_VIDEO, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_BAND, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_TALK, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_BLACK, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_CAMS_ON, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PROJECT_SELECT, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PROJECT_PROGRAM, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_KEYS, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_DRUMS, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_AUTO_TRANSITION_ON, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_LEFT, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_CENTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_RIGHT, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_TRANSITION_AUTO, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_TRANSITION_CUT, 'false' );
+    for i = 1, 24 do
+      BRCSetBlueLED( xk24, i, false );
+      BRCSetRedLED( xk24, i, false );
+    end;
 end;
 
-
-ScriptExecuteBG( "BRC_AtemMonitor" );
+ScriptExecuteBG( "BRC_Monitoring" );
 
 -- HyperDeckAddDevice( "10.0.1.129", "HYPER01" );
 -- ScriptExecuteBG( "BRC_HyperdeckRecMonitor" );

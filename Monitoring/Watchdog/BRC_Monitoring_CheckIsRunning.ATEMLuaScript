@@ -1,0 +1,5 @@
+-- VSLog( "Checking BRC Monitor is processing OK" );
+if IsScriptWithNameRunning( "BRC_Monitoring" ) == false then
+   VSLog( "....Checking BRC Monitoring: Not Found, restarting..... " );
+   ScriptExecuteBG( "BRC_Monitoring" );
+end;

@@ -1,0 +1,2 @@
+-- $$USES "BRC_Tools"
+EnviroWrite( GLOBAL_BRCMonitoring, "FALSE" );                  

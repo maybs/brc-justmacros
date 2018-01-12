@@ -3,47 +3,7 @@ CLS();
 
 BRCFinishActiveTransition();
 
-local xk16 = EnviroRead( "BRC_XK16_Index" );
-local xk24 = EnviroRead( "BRC_XK24_Index" );
-
-if xk16 > 0 then
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_VIDEO, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BAND, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TALK, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_BLACK, 'true' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PROJECT_PROGRAM, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_KEY_ON, EnviroRead("BRC_KEY_ON") );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_LEFT, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_CENTER, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_RIGHT, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_STAGE, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_PREVIEW_FLOOR, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_AUTO_ON, EnviroRead("BRC_AUTO_ON") );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_AUTO, 'false' );
-    XKeysSetButtonBlueLEDState( 1, BRC_BUTTON_TRANSITION_CUT, 'false' );
-end;
-
-if xk24 > 0 then
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_VIDEO, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_BAND, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_TALK, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_BLACK, 'true' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, EnviroRead("BRC_KEY_ON") );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_CAMS_ON, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PROJECT_SELECT, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PROJECT_PROGRAM, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_COMPUTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_KEYS, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_DRUMS, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_AUTO_TRANSITION_ON, EnviroRead("BRC_AUTO_ON") );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_LEFT, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_CENTER, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_PREVIEW_RIGHT, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_TRANSITION_AUTO, 'false' );
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_TRANSITION_CUT, 'false' );
-end;
+EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_BLACK );
 
 if ATEMMixerCount() > 0 then
     if not ATEMMixerMEGetFadedToBlack( 1, 1 ) then
