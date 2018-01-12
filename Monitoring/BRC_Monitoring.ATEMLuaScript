@@ -44,6 +44,7 @@ function UpdateLEDs()
     if auxInput == BRC_INPUT_PROGRAM then
       BRCSetBlueLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(programInput) );
       BRCSetRedLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(programInput) );
+      BRCSetRedLED( xk24, BRC_BUTTON_XK24_PROJECT_PROGRAM, true );
     else
       BRCSetBlueLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(auxInput) );
       BRCSetRedLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(auxInput) );
