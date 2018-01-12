@@ -7,6 +7,8 @@ EnviroWrite( "BRC_PROJECT_SELECT_IS_DOWN", "FALSE");
 EnviroWrite( "BRC_XK16_INDEX", 0 );
 EnviroWrite( "BRC_XK24_INDEX", 0 );
 
+XKeysSetDefaultMACRORedLEDBehaviour( "FALSE" );
+
 if XKeysPanelCount() > 0 then
   if XKeysGetPanelButtonCount(1) == 16 then
     EnviroWrite( "BRC_XK16_INDEX", 1 );
