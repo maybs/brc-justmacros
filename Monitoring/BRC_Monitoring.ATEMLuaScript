@@ -68,7 +68,7 @@ VSLog( "BRC Monitoring begun" );
 EnviroWrite( GLOBAL_BRCMonitoring, "TRUE" );
 ScriptExecuteBG("BRC_Monitoring_StartWatchDog");
 while EnviroRead( GLOBAL_BRCMonitoring ) == "TRUE" do
-      Sleep( 2000 );
+      Sleep( 20 );
       lvStartOfScan = tonumber( GetTickCount() );
       UpdateLEDs();
 --      if pcall( ExecuteXKeysScan ) == false then
