@@ -10,7 +10,7 @@ function UpdateLEDs()
   local auxInput = atemConnected and ATEMMixerAUXGetInput( 1, 1 );
   local previewInput = atemConnected and ATEMMixerMEGetPreviewInput( 1, 1 );
   local programInput = atemConnected and ATEMMixerMEGetProgramInput( 1, 1 );
-  local autoIsOn = EnviroRead( "BRC_AUTO_ON" );
+  local autoIsOn = EnviroRead( "BRC_AUTO_ON" ) == "TRUE";
   local keyIsOn = atemConnected and ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) or
           not atemConnected and EnviroRead( "BRC_KEY_ON" ) == "TRUE";
   local sceneButton = EnviroRead( "BRC_SCENE_BUTTON" );
