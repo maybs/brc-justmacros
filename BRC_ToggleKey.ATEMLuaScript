@@ -22,6 +22,6 @@ else
     end;
 end;
 EnviroWrite( "BRC_KEY_ON", brcKeyOn );
-if xk16 == 0 && xk24 == 0 then
+if xk16 == 0 and xk24 == 0 then
     VSLog("Key is now " .. (brcKeyOn == "TRUE" and "ON" or "OFF"))
 end;
