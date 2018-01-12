@@ -38,9 +38,9 @@ function UpdateLEDs()
   BRCSetBlueLED( xk24, BRC_BUTTON_XK24_KEY_ON, keyIsOn );
   BRCSetRedLED( xk24, BRC_BUTTON_XK24_KEY_ON, keyIsOn );
 
+  BRCSetBlueLED( xk16, BRC_BUTTON_PROJECT_PROGRAM, auxInput == BRC_INPUT_PROGRAM );
+  BRCSetRedLED( xk24, BRC_BUTTON_XK24_PROJECT_PROGRAM, auxInput == BRC_INPUT_PROGRAM );
   if EnviroRead( "BRC_PROJECT_SELECT_IS_DOWN" ) == "TRUE" then
-    BRCSetBlueLED( xk16, BRC_BUTTON_PROJECT_PROGRAM, auxInput == BRC_INPUT_PROGRAM );
-    BRCSetRedLED( xk24, BRC_BUTTON_XK24_PROJECT_PROGRAM, auxInput == BRC_INPUT_PROGRAM );
     BRCSetBlueLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(auxInput) );
     BRCSetRedLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(auxInput) );
   else
