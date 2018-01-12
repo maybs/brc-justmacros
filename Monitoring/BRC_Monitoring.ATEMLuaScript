@@ -17,9 +17,9 @@ function UpdateLEDs()
   local blacked = sceneButton == BRC_BUTTON_XK24_BLACK;
 
   if blacked then
-    BRCSetBlueLED( xk16, BRC_BUTTON_XK24_VIDEO, blacked );
-    BRCSetBlueLED( xk16, BRC_BUTTON_XK24_BAND, blacked );
-    BRCSetBlueLED( xk16, BRC_BUTTON_XK24_TALK, blacked );
+    BRCSetBlueLED( xk16, BRC_BUTTON_VIDEO, blacked );
+    BRCSetBlueLED( xk16, BRC_BUTTON_BAND, blacked );
+    BRCSetBlueLED( xk16, BRC_BUTTON_TALK, blacked );
   else
     BRCSetBlueLEDRadioGroup( xk16, BRC_SCENE_BUTTONS, 17 - sceneButton );
   end;
