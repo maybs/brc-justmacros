@@ -90,6 +90,7 @@ function BRCMapInputToButton(input)
   elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_PREVIEW_RIGHT
   elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_PREVIEW_STAGE
   elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_PREVIEW_COMPUTER
+  elseif input == BRC_INPUT_PROGRAM then return BRC_BUTTON_PROJECT_PROGRAM
   end;
 end;
 
@@ -100,6 +101,7 @@ function BRCMapInputToXk24Button(input)
   elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_XK24_PREVIEW_RIGHT
   elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_XK24_PREVIEW_DRUMS
   elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_XK24_PREVIEW_COMPUTER
+  elseif input == BRC_INPUT_PROGRAM then return BRC_BUTTON_XK24_PROJECT_PROGRAM
   end;
 end;
 
@@ -155,10 +157,6 @@ function BRCFinishActiveTransition ()
 end;
 
 function BRCPreview(button, xk24Button, input, autoTransition)
-    local xk16 = EnviroRead( "BRC_XK16_Index" );
-    local xk24 = EnviroRead( "BRC_XK24_Index" );
-    BRCSetLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, button );
-    BRCSetLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, xk24Button );
     if ATEMMixerCount() > 0 then
         ATEMMixerMESetPreviewInput( 1, 1, input );
     else
@@ -174,8 +172,6 @@ function BRCPreview(button, xk24Button, input, autoTransition)
 end;
 
 function BRCProject(button, input)
-    local xk16 = EnviroRead( "BRC_XK16_Index" );
-    BRCSetLEDRadioGroup( xk16, BRC_PROJECT_BUTTONS, button );
     if ATEMMixerCount() > 0 then
         ATEMMixerAUXSetInput( 1, 1, input );
     else
@@ -183,12 +179,35 @@ function BRCProject(button, input)
     end;
 end;
 
-function BRCSetLEDRadioGroup (xkeyId, buttons, activeButton)
+function BRCSetBlueLEDRadioGroup (xkeyId, buttons, activeButton)
     if xkeyId > 0 and activeButton then
         for i, button in ipairs( buttons ) do
-            local state = button == activeButton and "TRUE" or "FALSE";
-            XKeysSetButtonBlueLEDState( xkeyId, button, state );
+            BRCSetBlueLED( xkeyId, button, button == activeButton );
         end;
+    end;
+end;
+
+function BRCSetRedLEDRadioGroup (xkeyId, buttons, activeButton)
+    if xkeyId > 0 and activeButton then
+        for i, button in ipairs( buttons ) do
+          BRCSetRedLED( xkeyId, button, button == activeButton );
+        end;
+    end;
+end;
+
+function BRCSetBlueLED (xkeyId, button, on)
+    if xkeyId > 0 and button then
+        XKeysSetButtonBlueLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
+    else
+  --      VSLog("Turn " .. (on and "on" or "off") .. " blue LED for button " .. button);
+    end;
+end;
+
+function BRCSetRedLED (xkeyId, button, on)
+    if xkeyId > 0 and button then
+        XKeysSetButtonRedLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
+    else
+--        VSLog("Turn " .. (on and "on" or "off") .. " red LED for button " .. button);
     end;
 end;
 
@@ -205,14 +224,6 @@ function BRCTransition (type, wantKey)
 
     local brcKeyOn = wantKey and "TRUE" or "FALSE";
     EnviroWrite( "BRC_KEY_ON", brcKeyOn );
-    local xk16 = EnviroRead( "BRC_XK16_Index" );
-    local xk24 = EnviroRead( "BRC_XK24_Index" );
-    if xk16 > 0 then
-        XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_KEY_ON, brcKeyOn );
-    end;
-    if xk24 > 0 then
-        XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, brcKeyOn );
-    end;
 
     BRCCameraTally();
 

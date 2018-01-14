@@ -1,0 +1,11 @@
+function AddTaskToSchedulerAndEnable( pvScriptName, pvIntervalInSeconds )
+    AddScheduledTask( pvScriptName,  ( pvIntervalInSeconds * 1000 ) );
+    for i = 1, ScheduledTaskCount() do
+        if ( ScheduledTaskGetMacroName( i ) == pvScriptName ) then
+             ScheduledTaskSetEnabled( i, "TRUE" )
+        end;
+    end;
+    return 0;
+end;
+
+AddTaskToSchedulerAndEnable( "BRC_Monitoring_CheckIsRunning", 20 );

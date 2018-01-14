@@ -1,6 +1,10 @@
 -- $$USES "BRC_TOOLS"
 
-BRCPreview( BRC_BUTTON_PREVIEW_LEFT, BRC_BUTTON_XK24_PREVIEW_LEFT, BRC_INPUT_CAMERA_LEFT, EnviroRead( "BRC_AUTO_ON" ) == "TRUE" and "cut" );
-if EnviroRead( "BRC_AUTO_ON" ) ~= "TRUE" then
-    BRCCameraControllerSelectCamera(BRC_CAMERA_NUMBER_LEFT);
+if EnviroRead( "BRC_PROJECT_SELECT_IS_DOWN" ) == "TRUE" then
+  BRCProject( BRC_BUTTON_PROJECT_PROGRAM, BRC_INPUT_CAMERA_LEFT );
+else
+  BRCPreview( BRC_BUTTON_PREVIEW_LEFT, BRC_BUTTON_XK24_PREVIEW_LEFT, BRC_INPUT_CAMERA_LEFT, EnviroRead( "BRC_AUTO_ON" ) == "TRUE" and "cut" );
+  if EnviroRead( "BRC_AUTO_ON" ) ~= "TRUE" then
+      BRCCameraControllerSelectCamera(BRC_CAMERA_NUMBER_LEFT);
+  end;
 end;

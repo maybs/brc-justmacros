@@ -1,15 +1,11 @@
 -- $$USES "BRC_TOOLS"
 CLS();
 
-local xk16 = EnviroRead( "BRC_XK16_Index" );
-local xk24 = EnviroRead( "BRC_XK24_Index" );
-
 BRCFinishActiveTransition();
-BRCSetLEDRadioGroup( xk16, BRC_SCENE_BUTTONS, BRC_BUTTON_TALK );
-BRCSetLEDRadioGroup( xk24, BRC_SCENE_XK24_BUTTONS, BRC_BUTTON_XK24_TALK );
 BRCProject( BRC_BUTTON_PROJECT_PROGRAM, BRC_INPUT_PROGRAM );
 if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
 --    BRCCameraPreset( BRC_CAMERA_IP_CENTER, 6, 8 );
     BRCPreview( BRC_BUTTON_PREVIEW_CENTER, BRC_BUTTON_XK24_PREVIEW_CENTER, BRC_INPUT_CAMERA_CENTER);
 end;
 BRCTransition( "auto", true );
+EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_TALK );

@@ -1,0 +1,18 @@
+function RemoveTaskFromScheduler( pvScriptName )
+         local i;
+         local lvDeleteList                         = {};
+               lvDeleteList["COUNT"]                = 0;
+         for i = 1, ScheduledTaskCount() do
+             if string.upper(Trim(ScheduledTaskGetMacroName(i))) == string.upper(Trim( pvScriptName )) then
+                lvDeleteList["COUNT"]               = lvDeleteList["COUNT"] + 1;
+                lvDeleteList[lvDeleteList["COUNT"]] = i;
+             end;
+         end;
+         for i = 0, lvDeleteList["COUNT"] - 1 do
+             ScheduledTaskSetEnabled( lvDeleteList[ lvDeleteList["COUNT"] - i ], "FALSE" )
+             Sleep(50);
+             DeleteScheduledTask( lvDeleteList[ lvDeleteList["COUNT"] - i ] );
+         end;
+end;
+
+RemoveTaskFromScheduler( "BRC_Monitoring_CheckIsRunning" );

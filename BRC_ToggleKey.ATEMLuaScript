@@ -22,9 +22,6 @@ else
     end;
 end;
 EnviroWrite( "BRC_KEY_ON", brcKeyOn );
-if xk16 > 0 then
-    XKeysSetButtonBlueLEDState( xk16, BRC_BUTTON_KEY_ON, brcKeyOn );
-end;
-if xk24 > 0 then
-    XKeysSetButtonBlueLEDState( xk24, BRC_BUTTON_XK24_KEY_ON, brcKeyOn );
+if xk16 == 0 and xk24 == 0 then
+    VSLog("Key is now " .. (brcKeyOn == "TRUE" and "ON" or "OFF"))
 end;

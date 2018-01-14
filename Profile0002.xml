@@ -168,7 +168,7 @@
     </button>
     <button>
       <no>7</no>
-      <type>BLANK</type>
+      <type>STANDARD</type>
       <caption1>
       </caption1>
       <caption2>
@@ -178,8 +178,10 @@
       <caption2>
       </caption2>
       <onbuttondown>
+        EnviroWrite( "BRC_PROJECT_SELECT_IS_DOWN", "TRUE" );
       </onbuttondown>
       <onbuttonup>
+        EnviroWrite( "BRC_PROJECT_SELECT_IS_DOWN", "FALSE");
       </onbuttonup>
       <description>Button7</description>
       <sourcenumber>0</sourcenumber>
