@@ -24,9 +24,12 @@ BRC_BUTTON_XK24_BAND = 2;
 BRC_BUTTON_XK24_TALK = 3;
 BRC_BUTTON_XK24_BLACK = 4;
 BRC_BUTTON_XK24_KEY_ON = 5;
-BRC_BUTTON_XK24_CAMS_ON = 6;
+BRC_BUTTON_XK24_ALT = 6;
 BRC_BUTTON_XK24_PROJECT_SELECT = 7;
 BRC_BUTTON_XK24_PROJECT_PROGRAM = 8;
+BRC_BUTTON_XK24_PROJECTORS_UNBLANK = 9;
+BRC_BUTTON_XK24_PROJECTORS_ON = 11;
+BRC_BUTTON_XK24_CAMS_ON = 12;
 BRC_BUTTON_XK24_PREVIEW_COMPUTER = 13;
 BRC_BUTTON_XK24_PREVIEW_KEYS = 14;
 BRC_BUTTON_XK24_PREVIEW_DRUMS = 15;
@@ -44,6 +47,9 @@ BRC_CAMERA_IP_RIGHT = "10.0.1.203";
 BRC_CAMERA_NUMBER_LEFT = 1;
 BRC_CAMERA_NUMBER_CENTER = 2;
 BRC_CAMERA_NUMBER_RIGHT = 3;
+
+BRC_PROJECTOR_IP_LEFT = "10.0.1.100";
+BRC_PROJECTOR_IP_RIGHT = "10.0.1.101";
 
 -- -----------------------------------------------------------------------------------------------------------------------
 -- ATEM input mapping:
@@ -122,6 +128,7 @@ BRC_PREVIEW_XK24_BUTTONS = { BRC_BUTTON_XK24_PREVIEW_CENTER, BRC_BUTTON_XK24_PRE
                              BRC_BUTTON_XK24_PREVIEW_LEFT, BRC_BUTTON_XK24_PREVIEW_RIGHT };
 BRC_SCENE_XK24_BUTTONS = { BRC_BUTTON_XK24_BAND, BRC_BUTTON_XK24_BLACK, BRC_BUTTON_XK24_TALK, BRC_BUTTON_XK24_VIDEO };
 BRC_CAMERA_IPS = { BRC_CAMERA_IP_LEFT, BRC_CAMERA_IP_CENTER, BRC_CAMERA_IP_RIGHT };
+BRC_PROJECTOR_IPS = { BRC_PROJECTOR_IP_LEFT, BRC_PROJECTOR_IP_RIGHT };
 
 function BRCCameraControllerSelectCamera(cameraNumber)
     if cameraNumber then
@@ -177,6 +184,45 @@ function BRCProject(button, input)
     else
         VSLog("Set AUX1 output to input " .. input);
     end;
+end;
+
+function BRCProjectorBlank(blank)
+  local command = blank and
+    { 0xbe, 0xef, 0x03, 0x06, 0x00, 0x6b, 0xd9, 0x01, 0x00, 0x20, 0x30, 0x01, 0x00 } or
+    { 0xbe, 0xef, 0x03, 0x06, 0x00, 0xfb, 0xd8, 0x01, 0x00, 0x20, 0x30, 0x00, 0x00 };
+
+    BRCProjectorSendCommand( command );
+end;
+
+function BRCProjectorSendCommand(command)
+  if RawCommsNetworkConnectionCount() > 0 then
+    RawCommsNetRemoveConnection( RawCommsNetGetUniqueID ( 1 ) );
+  end;
+  for i, projectorIp in ipairs ( BRC_PROJECTOR_IPS ) do
+    local socketId = RawCommsNetAddConnection( projectorIp, 23, "TCP",
+      "BRC_GenericCommsIpEvents", "ConnectedToServer", "DisconnectedFromServer" );
+    RawCommsNetSetEnabled( socketId, "TRUE" );
+    VSLog( "New connection to " .. projectorIp .. " with ID: " .. socketId );
+    RawCommsNetSendPacket( socketId, unpack( command ) );
+    local start = tonumber( GetTickCount() );
+    while RawCommsNetGetTXQueueCount( socketId ) > 0 do
+      if (tonumber( GetTickCount() ) - start) > 5000 then
+        VSLog("timed out trying to send command to projector " .. projectorIp );
+        break;
+      end;
+      Sleep(50);
+    end;
+    RawCommsNetSetEnabled( socketId, "FALSE" );
+    RawCommsNetRemoveConnection( socketId );
+  end;
+end;
+
+function BRCProjectorPower(power)
+  local command = power and
+    { 0xbe, 0xef, 0x03, 0x06, 0x00, 0xba, 0xd2, 0x01, 0x00, 0x00, 0x60, 0x01, 0x00 } or
+    { 0xbe, 0xef, 0x03, 0x06, 0x00, 0x2a, 0xd3, 0x01, 0x00, 0x00, 0x60, 0x00, 0x00 };
+
+  BRCProjectorSendCommand( command );
 end;
 
 function BRCSetBlueLEDRadioGroup (xkeyId, buttons, activeButton)

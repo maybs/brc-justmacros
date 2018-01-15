@@ -141,17 +141,20 @@
     </button>
     <button>
       <no>6</no>
-      <type>MACRO</type>
+      <type>STANDARD</type>
       <caption1>
       </caption1>
       <caption2>
       </caption2>
-      <macroname>BRC_CameraPower</macroname>
+      <macroname>
+      </macroname>
       <caption2>
       </caption2>
       <onbuttondown>
+        EnviroWrite( "BRC_ALT_BUTTON_IS_DOWN", "TRUE" );
       </onbuttondown>
       <onbuttonup>
+        EnviroWrite( "BRC_ALT_BUTTON_IS_DOWN", "FALSE" );
       </onbuttonup>
       <description>Button6</description>
       <sourcenumber>0</sourcenumber>
@@ -230,8 +233,7 @@
       </caption1>
       <caption2>
       </caption2>
-      <macroname>
-      </macroname>
+      <macroname>BRC_ProjectorBlank</macroname>
       <caption2>
       </caption2>
       <onbuttondown>
@@ -281,13 +283,12 @@
     </button>
     <button>
       <no>11</no>
-      <type>BLANK</type>
+      <type>MACRO</type>
       <caption1>
       </caption1>
       <caption2>
       </caption2>
-      <macroname>
-      </macroname>
+      <macroname>BRC_ProjectorPower</macroname>
       <caption2>
       </caption2>
       <onbuttondown>
@@ -309,13 +310,12 @@
     </button>
     <button>
       <no>12</no>
-      <type>BLANK</type>
+      <type>MACRO</type>
       <caption1>
       </caption1>
       <caption2>
       </caption2>
-      <macroname>
-      </macroname>
+      <macroname>BRC_CameraPower</macroname>
       <caption2>
       </caption2>
       <onbuttondown>

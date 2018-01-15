@@ -3,6 +3,7 @@
 EnviroWrite( "BRC_AUTO_ON", "TRUE" );
 EnviroWrite( "BRC_KEY_ON", "FALSE" );
 EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_BLACK );
+EnviroWrite( "BRC_ALT_BUTTON_IS_DOWN", "FALSE");
 EnviroWrite( "BRC_PROJECT_SELECT_IS_DOWN", "FALSE");
 EnviroWrite( "BRC_XK16_INDEX", 0 );
 EnviroWrite( "BRC_XK24_INDEX", 0 );
