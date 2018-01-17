@@ -16,6 +16,16 @@ function UpdateLEDs()
   local sceneButton = EnviroRead( "BRC_SCENE_BUTTON" );
   local blacked = sceneButton == BRC_BUTTON_XK24_BLACK;
 
+  if EnviroRead( "BRC_ALT_IS_DOWN" ) == "TRUE" then
+    BRCSetBlueLEDs ( false );
+    BRCSetRedLEDs ( false );
+    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_ALT, true );
+    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_CAMS_ON, true );
+    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_PROJECTORS_ON, true );
+    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_PROJECTORS_UNBLANK, true );
+    return;
+  end;
+
   if blacked then
     BRCSetBlueLED( xk16, BRC_BUTTON_VIDEO, blacked );
     BRCSetBlueLED( xk16, BRC_BUTTON_BAND, blacked );

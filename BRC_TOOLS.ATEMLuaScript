@@ -249,12 +249,31 @@ function BRCSetBlueLED (xkeyId, button, on)
     end;
 end;
 
+function BRCSetBlueLEDs ( on )
+  local xk16 = EnviroRead( "BRC_XK16_Index" );
+  if xk16 > 0 then
+      for i = 1, 16 do
+        BRCSetBlueLED( xk16, i, false );
+      end;
+  end;
+end;
+
 function BRCSetRedLED (xkeyId, button, on)
     if xkeyId > 0 and button then
         XKeysSetButtonRedLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
     else
 --        VSLog("Turn " .. (on and "on" or "off") .. " red LED for button " .. button);
     end;
+end;
+
+function BRCSetRedLEDs ( on )
+  local xk24 = EnviroRead( "BRC_XK24_Index" );
+  if xk24 > 0 then
+      for i = 1, 24 do
+        BRCSetBlueLED( xk24, i, false );
+        BRCSetRedLED( xk24, i, false );
+      end;
+  end;
 end;
 
 function BRCTransition (type, wantKey)

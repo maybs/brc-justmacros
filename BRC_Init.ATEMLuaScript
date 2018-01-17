@@ -32,25 +32,8 @@ if XKeysPanelCount() > 1 then
   end;
 end;
 
-local xk16 = EnviroRead( "BRC_XK16_Index" );
-VSLog("XK16 " .. xk16);
-if xk16 > 0 then
-    VSLog("XK16 init.");
-    for i = 1, 16 do
-      BRCSetBlueLED( xk16, i, false );
-      BRCSetRedLED( xk16, i, false );
-    end;
-end;
-
-local xk24 = EnviroRead( "BRC_XK24_Index" );
-VSLog("XK24 " .. xk24);
-if xk24 > 0 then
-    VSLog("XK24 init.");
-    for i = 1, 24 do
-      BRCSetBlueLED( xk24, i, false );
-      BRCSetRedLED( xk24, i, false );
-    end;
-end;
+BRCSetBlueLEDs( false );
+BRCSetRedLEDs( false );
 
 ScriptExecuteBG( "BRC_Monitoring" );
 
