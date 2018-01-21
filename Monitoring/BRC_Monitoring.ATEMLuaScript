@@ -1,8 +1,5 @@
 -- $$USES "BRC_TOOLS"
 
--- ---------------------------------------------------------------------------------------------------------------
---  XKeys LED Processing
--- ---------------------------------------------------------------------------------------------------------------
 function UpdateLEDs()
   local xk16 = EnviroRead( "BRC_XK16_Index" );
   local xk24 = EnviroRead( "BRC_XK24_Index" );
@@ -15,49 +12,59 @@ function UpdateLEDs()
           not atemConnected and EnviroRead( "BRC_KEY_ON" ) == "TRUE";
   local sceneButton = EnviroRead( "BRC_SCENE_BUTTON" );
   local blacked = sceneButton == BRC_BUTTON_XK24_BLACK;
+  local altButtonIsDown = EnviroRead( "BRC_ALT_BUTTON_IS_DOWN" ) == "TRUE";
 
-  if EnviroRead( "BRC_ALT_IS_DOWN" ) == "TRUE" then
-    BRCSetBlueLEDs ( false );
-    BRCSetRedLEDs ( false );
-    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_ALT, true );
-    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_CAMS_ON, true );
-    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_PROJECTORS_ON, true );
-    BRCSetBlueLED ( xk24, BRC_BUTTON_XK24_PROJECTORS_UNBLANK, true );
-    return;
+  local xk16BlueLEDstates = {};
+  for i = 1, 16 do
+    xk16BlueLEDstates[i] = false;
   end;
 
-  if blacked then
-    BRCSetBlueLED( xk16, BRC_BUTTON_VIDEO, blacked );
-    BRCSetBlueLED( xk16, BRC_BUTTON_BAND, blacked );
-    BRCSetBlueLED( xk16, BRC_BUTTON_TALK, blacked );
-  else
-    BRCSetBlueLEDRadioGroup( xk16, BRC_SCENE_BUTTONS, 17 - sceneButton );
+  local xk24BlueLEDstates = {};
+  local xk24RedLEDstates = {};
+  for i = 1, 24 do
+    xk24BlueLEDstates[i] = false;
+    xk24RedLEDstates[i] = false;
   end;
 
-  BRCSetRedLEDRadioGroup( xk24, BRC_SCENE_XK24_BUTTONS, sceneButton );
-  BRCSetBlueLED( xk24, BRC_BUTTON_XK24_VIDEO, blacked );
-  BRCSetBlueLED( xk24, BRC_BUTTON_XK24_BAND, blacked );
-  BRCSetBlueLED( xk24, BRC_BUTTON_XK24_TALK, blacked );
-  BRCSetBlueLED( xk24, BRC_BUTTON_XK24_BLACK, false );
+  xk24BlueLEDstates[BRC_BUTTON_XK24_ALT] = altButtonIsDown;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_CAMS_ON] = altButtonIsDown;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_PROJECTORS_ON] = altButtonIsDown;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_PROJECTORS_UNBLANK] = altButtonIsDown;
 
-  BRCSetBlueLED( xk16, BRC_BUTTON_AUTO_TRANSITION_ON, autoIsOn );
-  BRCSetBlueLED( xk24, BRC_BUTTON_XK24_AUTO_TRANSITION_ON, autoIsOn );
-  BRCSetRedLED( xk24, BRC_BUTTON_XK24_AUTO_TRANSITION_ON, autoIsOn );
+  xk16BlueLEDstates[BRC_BUTTON_VIDEO] = blacked || (17 - sceneButton) == BRC_BUTTON_VIDEO;
+  xk16BlueLEDstates[BRC_BUTTON_BAND] = blacked || (17 - sceneButton) == BRC_BUTTON_BAND;
+  xk16BlueLEDstates[BRC_BUTTON_TALK] = blacked || (17 - sceneButton) == BRC_BUTTON_TALK;
 
-  BRCSetBlueLED( xk16, BRC_BUTTON_KEY_ON, keyIsOn );
-  BRCSetBlueLED( xk24, BRC_BUTTON_XK24_KEY_ON, keyIsOn );
-  BRCSetRedLED( xk24, BRC_BUTTON_XK24_KEY_ON, keyIsOn );
+  xk24RedLEDstates[BRC_BUTTON_XK24_VIDEO] = sceneButton == BRC_BUTTON_XK24_VIDEO;
+  xk24RedLEDstates[BRC_BUTTON_XK24_BAND] = sceneButton == BRC_BUTTON_XK24_BAND;
+  xk24RedLEDstates[BRC_BUTTON_XK24_TALK] = sceneButton == BRC_BUTTON_XK24_TALK;
 
-  BRCSetBlueLED( xk16, BRC_BUTTON_PROJECT_PROGRAM, auxInput == BRC_INPUT_PROGRAM );
-  BRCSetRedLED( xk24, BRC_BUTTON_XK24_PROJECT_PROGRAM, auxInput == BRC_INPUT_PROGRAM );
+  xk24BlueLEDstates[BRC_BUTTON_XK24_VIDEO] == blacked;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_BAND] == blacked;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_TALK] == blacked;
+
+  xk16BlueLEDstates[BRC_BUTTON_AUTO_TRANSITION_ON] = autoIsOn;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_AUTO_TRANSITION_ON] = autoIsOn;
+  xk24RedLEDstates[BRC_BUTTON_XK24_AUTO_TRANSITION_ON] = autoIsOn;
+
+  xk16BlueLEDstates[BRC_BUTTON_KEY_ON] = keyIsOn;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_KEY_ON = keyIsOn;
+  xk24RedLEDstates[BRC_BUTTON_XK24_KEY_ON = keyIsOn;
+
+  xk16BlueLEDstates[BRC_BUTTON_PROJECT_PROGRAM] = auxInput == BRC_INPUT_PROGRAM;
+  xk24RedLEDstates[BRC_BUTTON_XK24_PROJECT_PROGRAM] = auxInput == BRC_INPUT_PROGRAM;
   if EnviroRead( "BRC_PROJECT_SELECT_IS_DOWN" ) == "TRUE" then
-    BRCSetBlueLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(auxInput) );
-    BRCSetRedLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(auxInput) );
+    xk16BlueLEDstates[BRCMapInputToButton(auxInput)] = true;
+    xk24RedLEDstates[BRCMapInputToXk24Button(auxInput)] = true;
   else
-    BRCSetBlueLEDRadioGroup( xk16, BRC_PREVIEW_BUTTONS, BRCMapInputToButton(autoIsOn and programInput or previewInput) );
-    BRCSetBlueLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(previewInput) );
-    BRCSetRedLEDRadioGroup( xk24, BRC_PREVIEW_XK24_BUTTONS, BRCMapInputToXk24Button(programInput) );
+    xk16BlueLEDstates[BRCMapInputToButton(autoIsOn and programInput or previewInput)] = true;
+    xk24BlueLEDstates[BRCMapInputToXk24Button(previewInput)] = true;
+    xk24RedLEDstates[BRCMapInputToXk24Button(programInput)] = true;
   end;
+
+  BRCSetBlueLEDs( xk16, xk16BlueLEDstates );
+  BRCSetBlueLEDs( xk24, xk24BlueLEDstates );
+  BRCSetRedLEDs( xk24, xk24RedLEDstates );
 end;
 
 -- ---------------------------------------------------------------------------------------------------------------
