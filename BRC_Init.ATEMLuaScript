@@ -32,9 +32,6 @@ if XKeysPanelCount() > 1 then
   end;
 end;
 
-BRCSetBlueLEDs( false );
-BRCSetRedLEDs( false );
-
 ScriptExecuteBG( "BRC_Monitoring" );
 
 -- HyperDeckAddDevice( "10.0.1.129", "HYPER01" );

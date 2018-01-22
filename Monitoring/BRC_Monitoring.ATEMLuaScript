@@ -1,5 +1,11 @@
 -- $$USES "BRC_TOOLS"
 
+function setLEDstate(states, button)
+  if button then
+    states[button] = true;
+  end;
+end;
+
 function UpdateLEDs()
   local xk16 = EnviroRead( "BRC_XK16_Index" );
   local xk24 = EnviroRead( "BRC_XK24_Index" );
@@ -31,35 +37,50 @@ function UpdateLEDs()
   xk24BlueLEDstates[BRC_BUTTON_XK24_PROJECTORS_ON] = altButtonIsDown;
   xk24BlueLEDstates[BRC_BUTTON_XK24_PROJECTORS_UNBLANK] = altButtonIsDown;
 
-  xk16BlueLEDstates[BRC_BUTTON_VIDEO] = blacked || (17 - sceneButton) == BRC_BUTTON_VIDEO;
-  xk16BlueLEDstates[BRC_BUTTON_BAND] = blacked || (17 - sceneButton) == BRC_BUTTON_BAND;
-  xk16BlueLEDstates[BRC_BUTTON_TALK] = blacked || (17 - sceneButton) == BRC_BUTTON_TALK;
+  xk16BlueLEDstates[BRC_BUTTON_VIDEO] = blacked or (17 - sceneButton) == BRC_BUTTON_VIDEO;
+  xk16BlueLEDstates[BRC_BUTTON_BAND] = blacked or (17 - sceneButton) == BRC_BUTTON_BAND;
+  xk16BlueLEDstates[BRC_BUTTON_TALK] = blacked or (17 - sceneButton) == BRC_BUTTON_TALK;
 
   xk24RedLEDstates[BRC_BUTTON_XK24_VIDEO] = sceneButton == BRC_BUTTON_XK24_VIDEO;
   xk24RedLEDstates[BRC_BUTTON_XK24_BAND] = sceneButton == BRC_BUTTON_XK24_BAND;
   xk24RedLEDstates[BRC_BUTTON_XK24_TALK] = sceneButton == BRC_BUTTON_XK24_TALK;
 
-  xk24BlueLEDstates[BRC_BUTTON_XK24_VIDEO] == blacked;
-  xk24BlueLEDstates[BRC_BUTTON_XK24_BAND] == blacked;
-  xk24BlueLEDstates[BRC_BUTTON_XK24_TALK] == blacked;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_VIDEO] = blacked;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_BAND] = blacked;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_TALK] = blacked;
 
   xk16BlueLEDstates[BRC_BUTTON_AUTO_TRANSITION_ON] = autoIsOn;
   xk24BlueLEDstates[BRC_BUTTON_XK24_AUTO_TRANSITION_ON] = autoIsOn;
   xk24RedLEDstates[BRC_BUTTON_XK24_AUTO_TRANSITION_ON] = autoIsOn;
 
   xk16BlueLEDstates[BRC_BUTTON_KEY_ON] = keyIsOn;
-  xk24BlueLEDstates[BRC_BUTTON_XK24_KEY_ON = keyIsOn;
-  xk24RedLEDstates[BRC_BUTTON_XK24_KEY_ON = keyIsOn;
+  xk24BlueLEDstates[BRC_BUTTON_XK24_KEY_ON] = keyIsOn;
+  xk24RedLEDstates[BRC_BUTTON_XK24_KEY_ON] = keyIsOn;
 
   xk16BlueLEDstates[BRC_BUTTON_PROJECT_PROGRAM] = auxInput == BRC_INPUT_PROGRAM;
   xk24RedLEDstates[BRC_BUTTON_XK24_PROJECT_PROGRAM] = auxInput == BRC_INPUT_PROGRAM;
+
   if EnviroRead( "BRC_PROJECT_SELECT_IS_DOWN" ) == "TRUE" then
-    xk16BlueLEDstates[BRCMapInputToButton(auxInput)] = true;
-    xk24RedLEDstates[BRCMapInputToXk24Button(auxInput)] = true;
+    setLEDstate(xk16BlueLEDstates, BRCMapInputToButton(auxInput));
+    setLEDstate(xk16BlueLEDstates, BRCMapInputToButton(auxInput));
+    setLEDstate(xk24RedLEDstates, BRCMapInputToXk24Button(auxInput));
   else
-    xk16BlueLEDstates[BRCMapInputToButton(autoIsOn and programInput or previewInput)] = true;
-    xk24BlueLEDstates[BRCMapInputToXk24Button(previewInput)] = true;
-    xk24RedLEDstates[BRCMapInputToXk24Button(programInput)] = true;
+    setLEDstate(xk16BlueLEDstates, BRCMapInputToButton(autoIsOn and programInput or previewInput));
+    setLEDstate(xk24BlueLEDstates, BRCMapInputToXk24Button(previewInput));
+    setLEDstate(xk24RedLEDstates, BRCMapInputToXk24Button(programInput));
+  end;
+
+  if EnviroRead( "BRC_DEBUG_LED" == "TRUE") then
+    VSLog( "/===================\\" );
+    local line = "";
+    for i = 1, 24 do
+      line = line .. " " .. (xk24BlueLEDstates[i] and "B" or "-") .. (xk24RedLEDstates[i] and "R" or "-");
+      if i % 6 == 0 then
+        VSLog("|" .. line .. " |");
+        line = "";
+      end;
+    end;
+    VSLog( "\\===================/" );
   end;
 
   BRCSetBlueLEDs( xk16, xk16BlueLEDstates );
@@ -80,7 +101,11 @@ VSLog( "BRC Monitoring begun" );
 EnviroWrite( GLOBAL_BRCMonitoring, "TRUE" );
 ScriptExecuteBG("BRC_Monitoring_StartWatchDog");
 while EnviroRead( GLOBAL_BRCMonitoring ) == "TRUE" do
-      Sleep( 20 );
+      if EnviroRead( "BRC_DEBUG_LED" == "TRUE") then
+        Sleep( 2000 );
+      else
+        Sleep ( 20 );
+      end;
       lvStartOfScan = tonumber( GetTickCount() );
       UpdateLEDs();
 --      if pcall( ExecuteXKeysScan ) == false then
