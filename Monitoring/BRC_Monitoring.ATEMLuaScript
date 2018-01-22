@@ -1,5 +1,9 @@
 -- $$USES "BRC_TOOLS"
 
+xk16BlueLEDstates = {};
+xk24BlueLEDstates = {};
+xk24RedLEDstates = {};
+
 function setLEDstate(states, button)
   if button then
     states[button] = true;
@@ -15,19 +19,17 @@ function UpdateLEDs()
   local programInput = atemConnected and ATEMMixerMEGetProgramInput( 1, 1 );
   local autoIsOn = EnviroRead( "BRC_AUTO_ON" ) == "TRUE";
   local keyIsOn = atemConnected and ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) or
-          not atemConnected and EnviroRead( "BRC_KEY_ON" ) == "TRUE";
+    not atemConnected and EnviroRead( "BRC_KEY_ON" ) == "TRUE";
   local sceneButton = EnviroRead( "BRC_SCENE_BUTTON" );
   local blacked = sceneButton == BRC_BUTTON_XK24_BLACK;
   local altButtonIsDown = EnviroRead( "BRC_ALT_BUTTON_IS_DOWN" ) == "TRUE";
 
-  local xk16BlueLEDstates = {};
   for i = 1, 16 do
     xk16BlueLEDstates[i] = false;
+    xk24BlueLEDstates[i] = false;
+    xk24RedLEDstates[i] = false;
   end;
-
-  local xk24BlueLEDstates = {};
-  local xk24RedLEDstates = {};
-  for i = 1, 24 do
+  for i = 17, 24 do
     xk24BlueLEDstates[i] = false;
     xk24RedLEDstates[i] = false;
   end;
@@ -92,27 +94,21 @@ end;
 --  Monitoring Loop
 -- ---------------------------------------------------------------------------------------------------------------
 if EnviroRead( GLOBAL_BRC_Monitoring ) == "TRUE" then
-   VSLog( "BRC Monitoring may already be running" );
-   ScriptExecuteBG( "BRC_Monitoring_Stop" );
-   Sleep( 1000 );
+  VSLog( "BRC Monitoring may already be running" );
+  ScriptExecuteBG( "BRC_Monitoring_Stop" );
+  Sleep( 1000 );
 end;
 
 VSLog( "BRC Monitoring begun" );
 EnviroWrite( GLOBAL_BRCMonitoring, "TRUE" );
 ScriptExecuteBG("BRC_Monitoring_StartWatchDog");
 while EnviroRead( GLOBAL_BRCMonitoring ) == "TRUE" do
-      if EnviroRead( "BRC_DEBUG_LED" == "TRUE") then
-        Sleep( 2000 );
-      else
-        Sleep ( 20 );
-      end;
-      lvStartOfScan = tonumber( GetTickCount() );
-      UpdateLEDs();
---      if pcall( ExecuteXKeysScan ) == false then
---         VSLog( "BRC_Monitoring: Execute Failed... Sleeping for 2 seconds to see if we recover" );
---         Sleep( 10000 );
---      end;
-      lvDuration = ( tonumber( GetTickCount() ) - lvStartOfScan );
+  if EnviroRead( "BRC_DEBUG_LED" == "TRUE") then
+    Sleep( 2000 );
+  else
+    Sleep ( 20 );
+  end;
+  UpdateLEDs();
 end;
 ScriptExecuteBG("BRC_Monitoring_StopWatchDog");
 Sleep( 500 );

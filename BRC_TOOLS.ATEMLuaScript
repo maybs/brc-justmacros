@@ -1,6 +1,3 @@
-BRC_AUDIO_LEVEL_BAND = -9.6;
-BRC_AUDIO_LEVEL_TALK = 4.5;
-BRC_AUDIO_LEVEL_VIDEO = 0;
 
 BRC_BUTTON_VIDEO = 16;
 BRC_BUTTON_BAND = 15;
@@ -89,34 +86,31 @@ BRC_INPUT_COMPUTER_SLAVE = 5;
 BRC_INPUT_PROGRAM = 23;
 BRC_AUDIO_RCA = 9;
 
-function BRCMapInputToButton(input)
-  if input == BRC_INPUT_CAMERA_CENTER then return BRC_BUTTON_PREVIEW_CENTER
-  elseif input == BRC_INPUT_CAMERA_FLOOR then return BRC_BUTTON_PREVIEW_FLOOR
-  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_BUTTON_PREVIEW_LEFT
-  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_PREVIEW_RIGHT
-  elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_PREVIEW_STAGE
-  elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_PREVIEW_COMPUTER
-  elseif input == BRC_INPUT_PROGRAM then return BRC_BUTTON_PROJECT_PROGRAM
-  end;
-end;
+BRC_INPUT_BUTTON = {
+  BRC_INPUT_CAMERA_CENTER = BRC_BUTTON_PREVIEW_CENTER,
+  BRC_INPUT_CAMERA_FLOOR = BRC_BUTTON_PREVIEW_FLOOR,
+  BRC_INPUT_CAMERA_LEFT = BRC_BUTTON_PREVIEW_LEFT,
+  BRC_INPUT_CAMERA_RIGHT = BRC_BUTTON_PREVIEW_RIGHT,
+  BRC_INPUT_CAMERA_STAGE = BRC_BUTTON_PREVIEW_STAGE,
+  BRC_INPUT_COMPUTER_MASTER = BRC_BUTTON_PREVIEW_COMPUTER,
+  BRC_INPUT_PROGRAM = BRC_BUTTON_PROJECT_PROGRAM
+};
 
-function BRCMapInputToXk24Button(input)
-  if input == BRC_INPUT_CAMERA_CENTER then return BRC_BUTTON_XK24_PREVIEW_CENTER
-  elseif input == BRC_INPUT_CAMERA_FLOOR then return BRC_BUTTON_XK24_PREVIEW_FLOOR
-  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_BUTTON_XK24_PREVIEW_LEFT
-  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_BUTTON_XK24_PREVIEW_RIGHT
-  elseif input == BRC_INPUT_CAMERA_STAGE then return BRC_BUTTON_XK24_PREVIEW_DRUMS
-  elseif input == BRC_INPUT_COMPUTER_MASTER then return BRC_BUTTON_XK24_PREVIEW_COMPUTER
-  elseif input == BRC_INPUT_PROGRAM then return BRC_BUTTON_XK24_PROJECT_PROGRAM
-  end;
-end;
+BRC_INPUT_BUTTON_XK24 = {
+  BRC_INPUT_CAMERA_CENTER = BRC_BUTTON_XK24_PREVIEW_CENTER,
+  BRC_INPUT_CAMERA_FLOOR = BRC_BUTTON_XK24_PREVIEW_FLOOR,
+  BRC_INPUT_CAMERA_LEFT = BRC_BUTTON_XK24_PREVIEW_LEFT,
+  BRC_INPUT_CAMERA_RIGHT = BRC_BUTTON_XK24_PREVIEW_RIGHT,
+  BRC_INPUT_CAMERA_STAGE = BRC_BUTTON_XK24_PREVIEW_DRUMS,
+  BRC_INPUT_COMPUTER_MASTER = BRC_BUTTON_XK24_PREVIEW_COMPUTER,
+  BRC_INPUT_PROGRAM = BRC_BUTTON_XK24_PROJECT_PROGRAM
+};
 
-function BRCMapInputToCameraNumber(input)
-  if input == BRC_INPUT_CAMERA_CENTER then return BRC_CAMERA_NUMBER_CENTER
-  elseif input == BRC_INPUT_CAMERA_LEFT then return BRC_CAMERA_NUMBER_LEFT
-  elseif input == BRC_INPUT_CAMERA_RIGHT then return BRC_CAMERA_NUMBER_RIGHT
-  end;
-end;
+BRC_INPUT_CAMERA_NUMBER = {
+  BRC_INPUT_CAMERA_CENTER = BRC_CAMERA_NUMBER_CENTER,
+  BRC_INPUT_CAMERA_LEFT = BRC_CAMERA_NUMBER_LEFT,
+  BRC_INPUT_CAMERA_RIGHT = BRC_CAMERA_NUMBER_RIGHT
+};
 
 BRC_ALT_BUTTONS = { BRC_BUTTON_XK24_ALT, BRC_BUTTON_XK24_PROJECTORS_UNBLANK,
                     BRC_BUTTON_XK24_PROJECTORS_ON, BRC_BUTTON_XK24_CAMS_ON };
@@ -131,6 +125,18 @@ BRC_PREVIEW_XK24_BUTTONS = { BRC_BUTTON_XK24_PREVIEW_CENTER, BRC_BUTTON_XK24_PRE
 BRC_SCENE_XK24_BUTTONS = { BRC_BUTTON_XK24_BAND, BRC_BUTTON_XK24_BLACK, BRC_BUTTON_XK24_TALK, BRC_BUTTON_XK24_VIDEO };
 BRC_CAMERA_IPS = { BRC_CAMERA_IP_LEFT, BRC_CAMERA_IP_CENTER, BRC_CAMERA_IP_RIGHT };
 BRC_PROJECTOR_IPS = { BRC_PROJECTOR_IP_LEFT, BRC_PROJECTOR_IP_RIGHT };
+
+function BRCMapInputToButton(input)
+  return input and BRC_INPUT_BUTTON[input] or nil;
+end;
+
+function BRCMapInputToXk24Button(input)
+  return input and BRC_INPUT_BUTTON_XK24[input] or nil;
+end;
+
+function BRCMapInputToCameraNumber(input)
+  return input and BRC_INPUT_CAMERA_NUMBER[input] or nil;
+end;
 
 function BRCCameraControllerSelectCamera(cameraNumber)
     if cameraNumber then
@@ -227,47 +233,23 @@ function BRCProjectorPower(power)
   BRCProjectorSendCommand( command );
 end;
 
-function BRCSetBlueLEDRadioGroup (xkeyId, buttons, activeButton)
-    if xkeyId > 0 and activeButton then
-        for i, button in ipairs( buttons ) do
-            BRCSetBlueLED( xkeyId, button, button == activeButton );
-        end;
-    end;
-end;
-
-function BRCSetRedLEDRadioGroup (xkeyId, buttons, activeButton)
-    if xkeyId > 0 and activeButton then
-        for i, button in ipairs( buttons ) do
-          BRCSetRedLED( xkeyId, button, button == activeButton );
-        end;
-    end;
-end;
-
-function BRCSetBlueLED (xkeyId, button, on)
-    if xkeyId > 0 and button then
-        XKeysSetButtonBlueLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
-    else
-  --      VSLog("Turn " .. (on and "on" or "off") .. " blue LED for button " .. button);
-    end;
-end;
-
 function BRCSetBlueLEDs (xkeyId, buttonStates)
-  for button, on in pairs( buttonStates ) do
-    BRCSetBlueLED( xkeyId, button, on );
+  if xkeyId > 0 then
+    for button, on in pairs( buttonStates ) do
+      if button then
+        XKeysSetButtonBlueLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
+      end;
+    end;
   end;
 end;
 
-function BRCSetRedLED (xkeyId, button, on)
-    if xkeyId > 0 and button then
-        XKeysSetButtonRedLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
-    else
---        VSLog("Turn " .. (on and "on" or "off") .. " red LED for button " .. button);
-    end;
-end;
-
 function BRCSetRedLEDs (xkeyId, buttonStates)
-  for button, on in pairs( buttonStates ) do
-    BRCSetRedLED( xkeyId, button, on );
+  if xkeyId > 0 then
+    for button, on in pairs( buttonStates ) do
+      if button then
+        XKeysSetButtonRedLEDState( xkeyId, button, on and "TRUE" or "FALSE" );
+      end;
+    end;
   end;
 end;
 
