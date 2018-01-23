@@ -72,7 +72,7 @@ function UpdateLEDs()
     setLEDstate(xk24RedLEDstates, BRCMapInputToXk24Button(programInput));
   end;
 
-  if EnviroRead( "BRC_DEBUG_LED" == "TRUE") then
+  if EnviroRead( "BRC_DEBUG_LED" ) == "TRUE" then
     VSLog( "/===================\\" );
     local line = "";
     for i = 1, 24 do
@@ -103,7 +103,7 @@ VSLog( "BRC Monitoring begun" );
 EnviroWrite( GLOBAL_BRCMonitoring, "TRUE" );
 ScriptExecuteBG("BRC_Monitoring_StartWatchDog");
 while EnviroRead( GLOBAL_BRCMonitoring ) == "TRUE" do
-  if EnviroRead( "BRC_DEBUG_LED" == "TRUE") then
+  if EnviroRead( "BRC_DEBUG_LED" ) == "TRUE" then
     Sleep( 2000 );
   else
     Sleep ( 20 );
