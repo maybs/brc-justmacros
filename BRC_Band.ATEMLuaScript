@@ -9,3 +9,6 @@ if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
 end;
 BRCTransition( "auto", true );
 EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_BAND );
+BRCCameraIris( BRC_CAMERA_IP_LEFT, 90);
+BRCCameraIris( BRC_CAMERA_IP_CENTER, 90);
+BRCCameraIris( BRC_CAMERA_IP_RIGHT, 90);
