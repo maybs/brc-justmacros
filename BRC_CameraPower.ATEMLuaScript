@@ -1,4 +1,3 @@
 -- $$USES "BRC_TOOLS"
-CLS();
 
-BRCCameraPower(true);
+BRCCameraPower( EnviroRead( "BRC_ALT_BUTTON_IS_DOWN" ) ~= "TRUE" );

@@ -3,6 +3,7 @@
 EnviroWrite( "BRC_AUTO_ON", "TRUE" );
 EnviroWrite( "BRC_KEY_ON", "FALSE" );
 EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_BLACK );
+EnviroWrite( "BRC_ALT_BUTTON_IS_DOWN", "FALSE");
 EnviroWrite( "BRC_PROJECT_SELECT_IS_DOWN", "FALSE");
 EnviroWrite( "BRC_XK16_INDEX", 0 );
 EnviroWrite( "BRC_XK24_INDEX", 0 );
@@ -29,26 +30,6 @@ if XKeysPanelCount() > 1 then
     EnviroWrite( "BRC_XK24_INDEX", 2 );
     VSLog("XK24 at panel index 2.");
   end;
-end;
-
-local xk16 = EnviroRead( "BRC_XK16_Index" );
-VSLog("XK16 " .. xk16);
-if xk16 > 0 then
-    VSLog("XK16 init.");
-    for i = 1, 16 do
-      BRCSetBlueLED( xk16, i, false );
-      BRCSetRedLED( xk16, i, false );
-    end;
-end;
-
-local xk24 = EnviroRead( "BRC_XK24_Index" );
-VSLog("XK24 " .. xk24);
-if xk24 > 0 then
-    VSLog("XK24 init.");
-    for i = 1, 24 do
-      BRCSetBlueLED( xk24, i, false );
-      BRCSetRedLED( xk24, i, false );
-    end;
 end;
 
 ScriptExecuteBG( "BRC_Monitoring" );
