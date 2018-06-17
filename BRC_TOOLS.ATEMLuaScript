@@ -138,6 +138,10 @@ function BRCMapInputToCameraNumber(input)
   return input and BRC_INPUT_CAMERA_NUMBER[input] or nil;
 end;
 
+function BRCCameraControllerGetSelectedCamera()
+  return HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XQC:01:" .. cameraNumber .. "&res=1" );
+end;
+
 function BRCCameraControllerSelectCamera(cameraNumber)
     if cameraNumber then
       HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XCN:01:" .. cameraNumber .. "&res=1" );
