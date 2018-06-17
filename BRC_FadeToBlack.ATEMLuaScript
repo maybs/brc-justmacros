@@ -5,7 +5,7 @@ BRCFinishActiveTransition();
 
 EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_BLACK );
 
-if ATEMMixerCount() > 0 then
+if EnviroRead( "BRC_DEBUG_ATEM" ) ~= "TRUE" and ATEMMixerCount() > 0 then
     if not ATEMMixerMEGetFadedToBlack( 1, 1 ) then
         ATEMMixerMEFadeToBlack( 1, 1 );
     end;

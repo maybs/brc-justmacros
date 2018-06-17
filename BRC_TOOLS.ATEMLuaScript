@@ -180,14 +180,14 @@ function BRCCameraTally()
 end;
 
 function BRCFinishActiveTransition ()
-    if ATEMMixerCount() > 0 and ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) ~= "TRUE" and ATEMMixerCount() > 0 and ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
         ATEMMixerMECut( 1, 1 );
         Sleep( 60 );
     end;
 end;
 
 function BRCPreview(button, xk24Button, input, autoTransition)
-    if ATEMMixerCount() > 0 then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) ~= "TRUE" and ATEMMixerCount() > 0 then
         ATEMMixerMESetPreviewInput( 1, 1, input );
     else
         VSLog("Set preview to input " .. input);
@@ -202,7 +202,7 @@ function BRCPreview(button, xk24Button, input, autoTransition)
 end;
 
 function BRCProject(button, input)
-    if ATEMMixerCount() > 0 then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) ~= "TRUE" and ATEMMixerCount() > 0 then
         ATEMMixerAUXSetInput( 1, 1, input );
     else
         VSLog("Set AUX1 output to input " .. input);
@@ -284,7 +284,7 @@ function BRCTransition (type, wantKey)
 
     BRCCameraTally();
 
-    if atemConnected then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) ~= "TRUE" and atemConnected then
         ATEMMixerMESetNextTransitionLayers( 1, 1, transitionLayers );
 
         if ATEMMixerMEGetFadedToBlack( 1, 1 ) then
