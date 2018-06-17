@@ -112,6 +112,12 @@ BRC_INPUT_CAMERA_NUMBER = {
   [BRC_INPUT_CAMERA_RIGHT] = BRC_CAMERA_NUMBER_RIGHT
 };
 
+BRC_CAMERA_NUMBER_INPUT = {
+  [BRC_CAMERA_NUMBER_CENTER] = BRC_INPUT_CAMERA_CENTER,
+  [BRC_CAMERA_NUMBER_LEFT] = BRC_INPUT_CAMERA_LEFT,
+  [BRC_CAMERA_NUMBER_RIGHT] = BRC_INPUT_CAMERA_RIGHT
+}
+
 BRC_ALT_BUTTONS = { BRC_BUTTON_XK24_ALT, BRC_BUTTON_XK24_PROJECTORS_UNBLANK,
                     BRC_BUTTON_XK24_PROJECTORS_ON, BRC_BUTTON_XK24_CAMS_ON };
 BRC_PREVIEW_BUTTONS = { BRC_BUTTON_PREVIEW_CENTER, BRC_BUTTON_PREVIEW_COMPUTER, BRC_BUTTON_PREVIEW_FLOOR,
@@ -138,8 +144,13 @@ function BRCMapInputToCameraNumber(input)
   return input and BRC_INPUT_CAMERA_NUMBER[input] or nil;
 end;
 
+function BRCMapCameraNumberToInput(cameraNumber)
+  return input and BRC_CAMERA_NUMBER_INPUT[cameraNumber] or nil;
+end;
+
 function BRCCameraControllerGetSelectedCamera()
-  return HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XQC:01:" .. cameraNumber .. "&res=1" );
+  local response = HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XQC:01" .. "&res=1" );
+  return string.match(response, "XQC:01:(%d+)");
 end;
 
 function BRCCameraControllerSelectCamera(cameraNumber)

@@ -89,6 +89,17 @@ function UpdateLEDs()
   BRCSetRedLEDs( xk24, xk24RedLEDstates );
 end;
 
+function UpdatePreview()
+  if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
+    local camera = BRCCameraControllerGetSelectedCamera();
+    local button = nil;
+    local xk24Button = nil;
+    local input = BRCMapCameraNumberToInput(camera);
+    local autoTransition = false;
+    BRCPreview(button, xk24Button, input, autoTransition);
+  end;
+end;
+
 -- ---------------------------------------------------------------------------------------------------------------
 --  Monitoring Loop
 -- ---------------------------------------------------------------------------------------------------------------
@@ -108,6 +119,7 @@ while EnviroRead( GLOBAL_BRCMonitoring ) == "TRUE" do
     Sleep ( 20 );
   end;
   UpdateLEDs();
+  UpdatePreview();
 end;
 ScriptExecuteBG("BRC_Monitoring_StopWatchDog");
 Sleep( 500 );
