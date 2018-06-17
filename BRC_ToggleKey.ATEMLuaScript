@@ -6,7 +6,7 @@ local xk24 = EnviroRead( "BRC_XK24_Index" );
 local brcKeyOn;
 if EnviroRead( "BRC_KEY_ON" ) == "TRUE" then
     brcKeyOn = "FALSE";
-    if ATEMMixerCount() == 0 then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) == "TRUE" or ATEMMixerCount() == 0 then
         VSLog("Transition KEY1 using auto.  Key will be OFF.");
     elseif ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
         ATEMMixerMESetNextTransitionLayers( 1, 1, 'KEY1' );
@@ -14,7 +14,7 @@ if EnviroRead( "BRC_KEY_ON" ) == "TRUE" then
     end;
 else
     brcKeyOn = "TRUE";
-    if ATEMMixerCount() == 0 then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) == "TRUE" or ATEMMixerCount() == 0 then
         VSLog("Transition KEY1 using auto.  Key will be ON.");
     elseif not ATEMMixerMEKeyGetOnAir( 1, 1, 1 ) then
         ATEMMixerMESetNextTransitionLayers( 1, 1, 'KEY1' );
