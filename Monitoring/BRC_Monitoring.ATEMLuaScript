@@ -92,11 +92,13 @@ end;
 function UpdatePreview()
   if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
     local camera = BRCCameraControllerGetSelectedCamera();
-    local button = nil;
-    local xk24Button = nil;
     local input = BRCMapCameraNumberToInput(camera);
-    local autoTransition = false;
-    BRCPreview(button, xk24Button, input, autoTransition);
+    if input ~= nil then
+      local button = nil;
+      local xk24Button = nil;
+      local autoTransition = false;
+      BRCPreview(button, xk24Button, input, autoTransition);
+    end;
   end;
 end;
 

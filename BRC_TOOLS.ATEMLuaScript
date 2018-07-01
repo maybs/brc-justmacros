@@ -145,12 +145,12 @@ function BRCMapInputToCameraNumber(input)
 end;
 
 function BRCMapCameraNumberToInput(cameraNumber)
-  return input and BRC_CAMERA_NUMBER_INPUT[cameraNumber] or nil;
+  return cameraNumber and BRC_CAMERA_NUMBER_INPUT[cameraNumber] or nil;
 end;
 
 function BRCCameraControllerGetSelectedCamera()
   local response = HTTPGet( "http://" .. BRC_CAMERA_CONTROLLER_IP .. "/cgi-bin/aw_cam?cmd=XQC:01" .. "&res=1" );
-  return string.match(response, "XQC:01:(%d+)");
+  return tonumber(string.match(response, "XQC:01:(%d+)"));
 end;
 
 function BRCCameraControllerSelectCamera(cameraNumber)
