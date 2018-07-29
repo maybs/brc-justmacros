@@ -91,6 +91,11 @@ end;
 
 function UpdatePreview()
   if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
+    if EnviroRead( "BRC_DEBUG_ATEM" ) ~= "TRUE" and ATEMMixerCount() > 0 and
+      ATEMMixerMEGetTransitionStatusActive( 1, 1 ) then
+        return;
+    end;
+
     local camera = BRCCameraControllerGetSelectedCamera();
     local input = BRCMapCameraNumberToInput(camera);
     if input ~= nil then
