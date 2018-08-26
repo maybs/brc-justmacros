@@ -25,6 +25,7 @@ BRC_BUTTON_XK24_ALT = 6;
 BRC_BUTTON_XK24_PROJECT_SELECT = 7;
 BRC_BUTTON_XK24_PROJECT_PROGRAM = 8;
 BRC_BUTTON_XK24_PROJECTORS_UNBLANK = 9;
+BRC_BUTTON_XK24_PROJECTORS_CENTER_UNBLANK = 10;
 BRC_BUTTON_XK24_PROJECTORS_ON = 11;
 BRC_BUTTON_XK24_CAMS_ON = 12;
 BRC_BUTTON_XK24_PREVIEW_COMPUTER = 13;
@@ -47,6 +48,7 @@ BRC_CAMERA_NUMBER_RIGHT = 3;
 
 BRC_PROJECTOR_IP_LEFT = "10.0.1.100";
 BRC_PROJECTOR_IP_RIGHT = "10.0.1.101";
+BRC_PROJECTOR_IP_CENTER = "10.0.1.102";
 
 -- -----------------------------------------------------------------------------------------------------------------------
 -- ATEM input mapping:
@@ -113,7 +115,8 @@ BRC_INPUT_CAMERA_NUMBER = {
 };
 
 BRC_ALT_BUTTONS = { BRC_BUTTON_XK24_ALT, BRC_BUTTON_XK24_PROJECTORS_UNBLANK,
-                    BRC_BUTTON_XK24_PROJECTORS_ON, BRC_BUTTON_XK24_CAMS_ON };
+                    BRC_BUTTON_XK24_PROJECTORS_CENTER_UNBLANK, BRC_BUTTON_XK24_PROJECTORS_ON,
+                    BRC_BUTTON_XK24_CAMS_ON };
 BRC_PREVIEW_BUTTONS = { BRC_BUTTON_PREVIEW_CENTER, BRC_BUTTON_PREVIEW_COMPUTER, BRC_BUTTON_PREVIEW_FLOOR,
                         BRC_BUTTON_PREVIEW_LEFT, BRC_BUTTON_PREVIEW_RIGHT, BRC_BUTTON_PREVIEW_STAGE };
 BRC_PROJECT_BUTTONS = { BRC_BUTTON_PROJECT_COMPUTER, BRC_BUTTON_PROJECT_PROGRAM };
@@ -124,7 +127,7 @@ BRC_PREVIEW_XK24_BUTTONS = { BRC_BUTTON_XK24_PREVIEW_CENTER, BRC_BUTTON_XK24_PRE
                              BRC_BUTTON_XK24_PREVIEW_LEFT, BRC_BUTTON_XK24_PREVIEW_RIGHT };
 BRC_SCENE_XK24_BUTTONS = { BRC_BUTTON_XK24_BAND, BRC_BUTTON_XK24_BLACK, BRC_BUTTON_XK24_TALK, BRC_BUTTON_XK24_VIDEO };
 BRC_CAMERA_IPS = { BRC_CAMERA_IP_LEFT, BRC_CAMERA_IP_CENTER, BRC_CAMERA_IP_RIGHT };
-BRC_PROJECTOR_IPS = { BRC_PROJECTOR_IP_LEFT, BRC_PROJECTOR_IP_RIGHT };
+BRC_PROJECTOR_IPS = { BRC_PROJECTOR_IP_LEFT, BRC_PROJECTOR_IP_CENTER, BRC_PROJECTOR_IP_RIGHT };
 
 function BRCMapInputToButton(input)
   return input and BRC_INPUT_BUTTON[input] or nil;
@@ -204,19 +207,19 @@ function BRCProject(button, input)
     end;
 end;
 
-function BRCProjectorBlank(blank)
+function BRCProjectorBlank(blank, projectorIps)
   local command = blank and
     { 0xbe, 0xef, 0x03, 0x06, 0x00, 0x6b, 0xd9, 0x01, 0x00, 0x20, 0x30, 0x01, 0x00 } or
     { 0xbe, 0xef, 0x03, 0x06, 0x00, 0xfb, 0xd8, 0x01, 0x00, 0x20, 0x30, 0x00, 0x00 };
 
-    BRCProjectorSendCommand( command );
+    BRCProjectorSendCommand( command, projectorIps );
 end;
 
-function BRCProjectorSendCommand(command)
+function BRCProjectorSendCommand(command, projectorIps)
   if RawCommsNetworkConnectionCount() > 0 then
     RawCommsNetRemoveConnection( RawCommsNetGetUniqueID ( 1 ) );
   end;
-  for i, projectorIp in ipairs ( BRC_PROJECTOR_IPS ) do
+  for i, projectorIp in ipairs ( projectorIps ) do
     local socketId = RawCommsNetAddConnection( projectorIp, 23, "TCP",
       "BRC_GenericCommsIpEvents", "ConnectedToServer", "DisconnectedFromServer" );
     RawCommsNetSetEnabled( socketId, "TRUE" );
@@ -235,12 +238,12 @@ function BRCProjectorSendCommand(command)
   end;
 end;
 
-function BRCProjectorPower(power)
+function BRCProjectorPower(power, projectorIps)
   local command = power and
     { 0xbe, 0xef, 0x03, 0x06, 0x00, 0xba, 0xd2, 0x01, 0x00, 0x00, 0x60, 0x01, 0x00 } or
     { 0xbe, 0xef, 0x03, 0x06, 0x00, 0x2a, 0xd3, 0x01, 0x00, 0x00, 0x60, 0x00, 0x00 };
 
-  BRCProjectorSendCommand( command );
+  BRCProjectorSendCommand( command, projectorIps );
 end;
 
 function BRCSetBlueLEDs (xkeyId, buttonStates)

@@ -1,0 +1,3 @@
+-- $$USES "BRC_TOOLS"
+
+BRCProjectorBlank( EnviroRead( "BRC_ALT_BUTTON_IS_DOWN" ) == "TRUE", { BRC_PROJECTOR_IP_CENTER } );
