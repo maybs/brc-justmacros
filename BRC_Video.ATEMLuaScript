@@ -5,7 +5,23 @@ BRCFinishActiveTransition();
 BRCProject( BRC_BUTTON_PROJECT_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCPreview( BRC_BUTTON_PREVIEW_COMPUTER, BRC_BUTTON_XK24_PREVIEW_COMPUTER, BRC_INPUT_COMPUTER_MASTER );
 BRCTransition( "auto", false );
+
+local currentScene = tonumber( EnviroRead( "BRC_SCENE_BUTTON" ) );
+if currentScene == BRC_BUTTON_XK24_BAND then
+    VSLog("Saving iris values for BAND");
+    local centeriris = BRCCameraGetIris(BRC_CAMERA_IP_CENTER);
+    VSLog("Center iris is " .. centeriris);
+    EnviroWrite( "BRC_CAMERA_IRIS_LEFT_BAND", BRCCameraGetIris(BRC_CAMERA_IP_LEFT) );
+    EnviroWrite( "BRC_CAMERA_IRIS_CENTER_BAND", BRCCameraGetIris(BRC_CAMERA_IP_CENTER) );
+    EnviroWrite( "BRC_CAMERA_IRIS_RIGHT_BAND", BRCCameraGetIris(BRC_CAMERA_IP_RIGHT) );
+elseif currentScene == BRC_BUTTON_XK24_TALK then
+    VSLog("Saving iris values for TALK");
+    EnviroWrite( "BRC_CAMERA_IRIS_LEFT_TALK", BRCCameraGetIris(BRC_CAMERA_IP_LEFT) );
+    EnviroWrite( "BRC_CAMERA_IRIS_CENTER_TALK", BRCCameraGetIris(BRC_CAMERA_IP_CENTER) );
+    EnviroWrite( "BRC_CAMERA_IRIS_RIGHT_TALK", BRCCameraGetIris(BRC_CAMERA_IP_RIGHT) );
+end;
 EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_VIDEO );
+
 if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
     Sleep(1000);
     BRCCameraPreset( BRC_CAMERA_IP_CENTER, 6, 8 );
