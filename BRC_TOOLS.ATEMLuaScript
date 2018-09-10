@@ -146,9 +146,7 @@ end;
 
 function BRCCameraGetIris(cameraIp)
   local response = HTTPGet( "http://" .. cameraIp .. "/cgi-bin/aw_ptz?cmd=%23GI" .. "&res=1" );
-  VSLog("Iris response for " .. cameraIp .. " is " .. response);
   local irisValue = string.match(response, 'gi(%x%x%x)');
-  VSLog("Iris value is " .. irisValue);
   return irisValue;
 end;
 
