@@ -9,6 +9,7 @@ if EnviroRead( "BRC_AUTO_ON" ) == "TRUE" then
 end;
 BRCTransition( "auto", true );
 EnviroWrite( "BRC_SCENE_BUTTON", BRC_BUTTON_XK24_TALK );
-BRCCameraIris( BRC_CAMERA_IP_LEFT, 60);
-BRCCameraIris( BRC_CAMERA_IP_CENTER, 60);
-BRCCameraIris( BRC_CAMERA_IP_RIGHT, 60);
+
+BRCCameraIris( BRC_CAMERA_IP_LEFT, EnviroRead( "BRC_CAMERA_IRIS_LEFT_TALK" ) );
+BRCCameraIris( BRC_CAMERA_IP_CENTER, EnviroRead( "BRC_CAMERA_IRIS_CENTER_TALK" ) );
+BRCCameraIris( BRC_CAMERA_IP_RIGHT, EnviroRead( "BRC_CAMERA_IRIS_RIGHT_TALK" ) );
